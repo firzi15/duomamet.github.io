@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netflix Clone</title>
+    <title>Streaming Service</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #141414;
             color: white;
-            font-family: Arial, sans-serif;
         }
         .navbar {
             background-color: #111;
@@ -17,88 +16,126 @@
         .navbar-brand img {
             height: 40px;
         }
-        .banner {
-            position: relative;
-            height: 70vh;
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4f/Netflix-logo.svg');
-            background-size: cover;
-            background-position: center;
+        .video-container {
+            margin-top: 50px;
+            text-align: center;
+        }
+        .video-player {
+            width: 100%;
+            max-width: 1200px;
+            background-color: #000;
+        }
+        .controls {
+            margin-top: 10px;
+        }
+        .btn-play, .btn-pause, .btn-stop {
+            padding: 10px 20px;
+            background-color: #e50914;
+            border: none;
             color: white;
+            font-size: 18px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-play:hover, .btn-pause:hover, .btn-stop:hover {
+            background-color: #f40612;
+        }
+        .btn {
+            font-size: 18px;
+        }
+
+        /* Styling for remote support */
+        .video-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
             flex-direction: column;
         }
-        .banner h1 {
-            font-size: 5rem;
-            margin-bottom: 20px;
-        }
-        .btn-play {
-            padding: 12px 25px;
+
+        .btn-control {
+            font-size: 18px;
             background-color: #e50914;
             border: none;
-            font-size: 16px;
             color: white;
+            padding: 10px 20px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            margin: 10px;
         }
-        .btn-play:hover {
-            background-color: #f40612;
+
+        .btn-control:focus {
+            outline: none;
         }
-        .movie-row {
-            display: flex;
-            overflow-x: scroll;
-            gap: 15px;
-            padding: 15px 0;
-        }
-        .movie-row img {
-            height: 200px;
-            transition: transform 0.3s ease;
-            cursor: pointer;
-        }
-        .movie-row img:hover {
-            transform: scale(1.1);
-        }
-        .content {
-            margin-top: 80px;
-        }
+
     </style>
 </head>
 <body>
 
     <!-- Navbar Section -->
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Netflix_2015_logo.svg" alt="Netflix Logo">
             </a>
-            <div class="d-flex">
-                <button class="btn btn-outline-light">Sign In</button>
-            </div>
         </div>
     </nav>
 
-    <!-- Banner Section -->
-    <section class="banner">
-        <h1>Welcome to Netflix</h1>
-        <button class="btn-play">Play</button>
-    </section>
+    <!-- Video Player Section -->
+    <div class="container video-container">
+        <h1>Streaming Service</h1>
+        <!-- Video Player -->
+        <video id="videoPlayer" class="video-player" controls>
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
 
-    <!-- Content Section -->
-    <section class="content container">
-        <h2>Trending Now</h2>
-        <div class="movie-row">
-            <img src="https://m.media-amazon.com/images/I/51FG72GxdZL._AC_.jpg" alt="Movie 1">
-            <img src="https://m.media-amazon.com/images/I/51G-CmjP0mL._AC_.jpg" alt="Movie 2">
-            <img src="https://m.media-amazon.com/images/I/51c2UtqxNqL._AC_.jpg" alt="Movie 3">
-            <img src="https://m.media-amazon.com/images/I/510bDvqkXxL._AC_.jpg" alt="Movie 4">
-            <img src="https://m.media-amazon.com/images/I/510L3YOtdJL._AC_.jpg" alt="Movie 5">
+        <!-- Custom Video Controls -->
+        <div class="controls">
+            <button class="btn-play btn-control" onclick="playVideo()">Play</button>
+            <button class="btn-pause btn-control" onclick="pauseVideo()">Pause</button>
+            <button class="btn-stop btn-control" onclick="stopVideo()">Stop</button>
         </div>
+    </div>
 
-        <h2>Top Rated</h2>
-        <div class="movie-row">
-            <img src="https://m.media-amazon.com/images/I/51FG72GxdZL._AC_.jpg" alt="Movie 6">
-            <img src="https://m.media-amazon.com/images/I/51G-CmjP0mL._AC_.jpg" alt="Movie 7">
-            <img src="https://m.media-amazon.com/images/I/51c2UtqxNqL._AC_.jpg" alt="Movie 8">
-        
+    <!-- Remote Control Instructions -->
+    <div class="container text-center">
+        <h3>Android TV Remote Control Support</h3>
+        <p>Use the arrow keys and enter button on your Android TV remote to interact with the video player.</p>
+    </div>
+
+    <script>
+        // Video controls
+        const video = document.getElementById('videoPlayer');
+
+        function playVideo() {
+            video.play();
+        }
+
+        function pauseVideo() {
+            video.pause();
+        }
+
+        function stopVideo() {
+            video.pause();
+            video.currentTime = 0;
+        }
+
+        // Android TV remote interaction
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "ArrowUp" || e.key === "ArrowDown" || e.key === "ArrowLeft" || e.key === "ArrowRight") {
+                console.log("Arrow key pressed");  // You can handle navigation logic here if needed
+            }
+
+            if (e.key === "Enter") {
+                if (video.paused) {
+                    playVideo();
+                } else {
+                    pauseVideo();
+                }
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
