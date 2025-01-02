@@ -1,75 +1,104 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Streaming dengan DRM</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Shaka Player untuk video streaming -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/3.0.0/shaka-player.compiled.js"></script>
+    <title>Netflix Clone</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #141414;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            background-color: #111;
+        }
+        .navbar-brand img {
+            height: 40px;
+        }
+        .banner {
+            position: relative;
+            height: 70vh;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4f/Netflix-logo.svg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+        }
+        .banner h1 {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+        .btn-play {
+            padding: 12px 25px;
+            background-color: #e50914;
+            border: none;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-play:hover {
+            background-color: #f40612;
+        }
+        .movie-row {
+            display: flex;
+            overflow-x: scroll;
+            gap: 15px;
+            padding: 15px 0;
+        }
+        .movie-row img {
+            height: 200px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .movie-row img:hover {
+            transform: scale(1.1);
+        }
+        .content {
+            margin-top: 80px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Video Streaming dengan DRM</h1>
 
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div id="video-container" class="video-container">
-                    <video id="video" class="w-100" controls></video>
-                </div>
+    <!-- Navbar Section -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Netflix_2015_logo.svg" alt="Netflix Logo">
+            </a>
+            <div class="d-flex">
+                <button class="btn btn-outline-light">Sign In</button>
             </div>
         </div>
-    </div>
+    </nav>
 
-    <script>
-        // Menjalankan Shaka Player
-        function initPlayer() {
-            // Membuat objek player Shaka
-            const player = new shaka.Player(document.getElementById('video'));
+    <!-- Banner Section -->
+    <section class="banner">
+        <h1>Welcome to Netflix</h1>
+        <button class="btn-play">Play</button>
+    </section>
 
-            // Menambahkan listener untuk menangani error
-            player.addEventListener('error', onErrorEvent);
+    <!-- Content Section -->
+    <section class="content container">
+        <h2>Trending Now</h2>
+        <div class="movie-row">
+            <img src="https://m.media-amazon.com/images/I/51FG72GxdZL._AC_.jpg" alt="Movie 1">
+            <img src="https://m.media-amazon.com/images/I/51G-CmjP0mL._AC_.jpg" alt="Movie 2">
+            <img src="https://m.media-amazon.com/images/I/51c2UtqxNqL._AC_.jpg" alt="Movie 3">
+            <img src="https://m.media-amazon.com/images/I/510bDvqkXxL._AC_.jpg" alt="Movie 4">
+            <img src="https://m.media-amazon.com/images/I/510L3YOtdJL._AC_.jpg" alt="Movie 5">
+        </div>
 
-            // Mengonfigurasi URL .mpd untuk streaming
-            const videoUrl = 'URL_VIDEO_MPD_ANDA.mpd';
-
-            // Mengonfigurasi DRM (misalnya, menggunakan Widevine)
-            const drmConfig = {
-                servers: {
-                    'com.widevine.alpha': 'URL_LICENSI_WIDEVINE_ANDA' // Ganti dengan URL server lisensi Widevine Anda
-                }
-            };
-
-            player.configure({
-                drm: drmConfig
-            });
-
-            // Memulai pemutaran video
-            player.load(videoUrl).then(function() {
-                console.log('Video berhasil dimuat');
-            }).catch(onError);
-        }
-
-        // Fungsi untuk menangani error
-        function onError(error) {
-            console.error('Error saat pemutaran video: ', error);
-            alert('Terjadi kesalahan dalam memuat video.');
-        }
-
-        // Menangani event error dari Shaka Player
-        function onErrorEvent(event) {
-            onError(event.detail);
-        }
-
-        // Menunggu hingga halaman siap dan memulai player
-        document.addEventListener('DOMContentLoaded', function() {
-            initPlayer();
-        });
-    </script>
-
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+        <h2>Top Rated</h2>
+        <div class="movie-row">
+            <img src="https://m.media-amazon.com/images/I/51FG72GxdZL._AC_.jpg" alt="Movie 6">
+            <img src="https://m.media-amazon.com/images/I/51G-CmjP0mL._AC_.jpg" alt="Movie 7">
+            <img src="https://m.media-amazon.com/images/I/51c2UtqxNqL._AC_.jpg" alt="Movie 8">
+        
