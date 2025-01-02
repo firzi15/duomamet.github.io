@@ -1,108 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Android TV Remote Control Example</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Kontrol dengan Arah Panah</title>
     <style>
         body {
-            background-color: #141414;
-            color: white;
-            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow: hidden;
+            background-color: #f0f0f0;
         }
-        .navbar {
-            background-color: #111;
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
         }
-        .navbar-brand img {
-            height: 40px;
-        }
-        .main-content {
-            margin-top: 50px;
+        .content {
+            width: 80%;
+            height: 80%;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            color: #333;
             text-align: center;
-        }
-        .btn-control {
-            font-size: 24px;
-            background-color: #e50914;
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            cursor: pointer;
-            margin: 20px;
-            transition: background-color 0.3s ease;
-        }
-        .btn-control:hover {
-            background-color: #f40612;
-        }
-        .highlight {
-            background-color: #f40612;
+            transition: transform 0.3s ease;
         }
     </style>
 </head>
 <body>
 
-    <!-- Navbar Section -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Netflix_2015_logo.svg" alt="Netflix Logo">
-            </a>
-        </div>
-    </nav>
-
-    <!-- Main Content Section -->
-    <div class="container main-content">
-        <h1>Android TV Remote Control</h1>
-        <p>Use the arrow keys and the Enter button to interact with the controls below.</p>
-
-        <!-- Controls -->
-        <div class="d-flex justify-content-center">
-            <button class="btn-control" id="btn1">Control 1</button>
-            <button class="btn-control" id="btn2">Control 2</button>
-            <button class="btn-control" id="btn3">Control 3</button>
+    <div class="container">
+        <div class="content" id="content">
+            Gunakan tombol panah untuk mengontrol saya!
         </div>
     </div>
 
     <script>
-        // Get buttons by ID
-        const btn1 = document.getElementById('btn1');
-        const btn2 = document.getElementById('btn2');
-        const btn3 = document.getElementById('btn3');
+        let content = document.getElementById('content');
+        let xPos = 0;
+        let yPos = 0;
 
-        let currentFocus = 0; // Index of the focused button
+        document.addEventListener('keydown', function(event) {
+            const step = 20; // jarak per gerakan
 
-        // Function to remove the highlight class from all buttons
-        function removeHighlight() {
-            btn1.classList.remove('highlight');
-            btn2.classList.remove('highlight');
-            btn3.classList.remove('highlight');
-        }
-
-        // Function to highlight the currently focused button
-        function setFocus(index) {
-            removeHighlight(); // Remove highlight from all buttons
-            if (index === 0) {
-                btn1.classList.add('highlight');
-            } else if (index === 1) {
-                btn2.classList.add('highlight');
-            } else if (index === 2) {
-                btn3.classList.add('highlight');
+            if (event.key === 'ArrowUp') {
+                yPos -= step; // bergerak ke atas
+            } else if (event.key === 'ArrowDown') {
+                yPos += step; // bergerak ke bawah
+            } else if (event.key === 'ArrowLeft') {
+                xPos -= step; // bergerak ke kiri
+            } else if (event.key === 'ArrowRight') {
+                xPos += step; // bergerak ke kanan
             }
-        }
 
-        // Set initial focus
-        setFocus(currentFocus);
+            content.style.transform = `translate(${xPos}px, ${yPos}px)`;
+        });
+    </script>
 
-        // Event listener for keydown (Android TV remote control simulation)
-        document.addEventListener('keydown', function(e) {
-            if (e.key === "ArrowRight") {
-                // Move focus to the next button
-                currentFocus = (currentFocus + 1) % 3;
-                setFocus(currentFocus);
-            } else if (e.key === "ArrowLeft") {
-                // Move focus to the previous button
-                currentFocus = (currentFocus - 1 + 3) % 3;
-                setFocus(currentFocus);
-            } else if (e.key === "Enter") {
-                // Trigger button click based on the current focus
-                if (currentFo
+</body>
+</html>
