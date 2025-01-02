@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Streaming dengan Remote TV (Netflix-like)</title>
+    <title>Video Streaming dengan Shaka Player dan Remote TV (Netflix-like)</title>
     <!-- Menambahkan Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Menambahkan Shaka Player -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/3.0.0/shaka-player.compiled.js"></script>
     <style>
         body {
             margin: 0;
@@ -22,12 +24,6 @@
             justify-content: center;
             align-items: center;
             margin-top: 10vh;
-        }
-
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
         .controls {
@@ -85,11 +81,6 @@
                 padding-top: 56.25%;
             }
 
-            video {
-                width: 100%;
-                height: 100%;
-            }
-
             .video-thumbnail {
                 width: 140px;
                 height: 80px;
@@ -100,24 +91,26 @@
 <body>
 
     <div class="video-container">
-        <video id="videoPlayer" controls autoplay>
-            <source src="http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_stereo_abl.mp4" type="video/mp4">
-            Browser Anda tidak mendukung elemen video.
-        </video>
+        <!-- Video player Shaka -->
+        <div id="shaka-player-container"></div>
+        <div class="controls">
+            <button class="control-btn btn btn-light" id="playPauseBtn">Play</button>
+            <button class="control-btn btn btn-light" id="muteBtn">Mute</button>
+        </div>
     </div>
 
     <!-- Pilihan video yang dapat digulirkan -->
     <div class="video-selection-container">
         <!-- Video Thumbnail 1 -->
-        <div class="video-thumbnail" id="video1" onclick="changeVideo('video1.mp4')"></div>
+        <div class="video-thumbnail" id="video1" onclick="changeVideo('https://path_to_video/video1.mpd')"></div>
         <!-- Video Thumbnail 2 -->
-        <div class="video-thumbnail" id="video2" onclick="changeVideo('video2.mp4')"></div>
+        <div class="video-thumbnail" id="video2" onclick="changeVideo('https://path_to_video/video2.mpd')"></div>
         <!-- Video Thumbnail 3 -->
-        <div class="video-thumbnail" id="video3" onclick="changeVideo('video3.mp4')"></div>
+        <div class="video-thumbnail" id="video3" onclick="changeVideo('https://path_to_video/video3.mpd')"></div>
         <!-- Video Thumbnail 4 -->
-        <div class="video-thumbnail" id="video4" onclick="changeVideo('video4.mp4')"></div>
+        <div class="video-thumbnail" id="video4" onclick="changeVideo('https://path_to_video/video4.mpd')"></div>
         <!-- Video Thumbnail 5 -->
-        <div class="video-thumbnail" id="video5" onclick="changeVideo('video5.mp4')"></div>
+        <div class="video-thumbnail" id="video5" onclick="changeVideo('https://path_to_video/video5.mpd')"></div>
         <!-- Tambahkan lebih banyak thumbnail video jika diperlukan -->
     </div>
 
@@ -126,25 +119,53 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
     <script>
-        const video = document.getElementById('videoPlayer');
+        let player;
         const playPauseBtn = document.getElementById('playPauseBtn');
         const muteBtn = document.getElementById('muteBtn');
 
+        // Fungsi untuk menginisialisasi Shaka Player
+        function initPlayer() {
+            const videoContainer = document.getElementById('shaka-player-container');
+            player = new shaka.Player(videoContainer);
+
+            // Tangani error player
+            player.addEventListener('error', onError);
+
+            // Memuat video default saat pertama kali dimuat
+            changeVideo('http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4');
+        }
+
+        // Fungsi untuk menangani error
+        function onError(event) {
+            console.error('Error saat memuat video:', event.detail);
+        }
+
         // Fungsi untuk memutar dan menjeda video
         function togglePlayPause() {
-            if (video.paused) {
-                video.play();
+            if (player.isPaused()) {
+                player.play();
                 playPauseBtn.textContent = 'Pause';
             } else {
-                video.pause();
+                player.pause();
                 playPauseBtn.textContent = 'Play';
             }
         }
 
         // Fungsi untuk mute/unmute video
         function toggleMute() {
-            video.muted = !video.muted;
-            muteBtn.textContent = video.muted ? 'Unmute' : 'Mute';
+            const isMuted = player.isMuted();
+            player.setMuted(!isMuted);
+            muteBtn.textContent = isMuted ? 'Mute' : 'Unmute';
+        }
+
+        // Fungsi untuk mengganti video berdasarkan thumbnail yang dipilih
+        function changeVideo(videoSource) {
+            player.load(videoSource).then(() => {
+                console.log('Video berhasil dimuat');
+                playPauseBtn.textContent = 'Pause';
+            }).catch((error) => {
+                console.error('Error saat memuat video', error);
+            });
         }
 
         // Event listener untuk tombol play/pause
@@ -158,19 +179,19 @@
             switch (event.key) {
                 case 'ArrowUp':
                     // Meningkatkan volume
-                    if (video.volume < 1) video.volume += 0.1;
+                    if (player.getVolume() < 1) player.setVolume(player.getVolume() + 0.1);
                     break;
                 case 'ArrowDown':
                     // Menurunkan volume
-                    if (video.volume > 0) video.volume -= 0.1;
+                    if (player.getVolume() > 0) player.setVolume(player.getVolume() - 0.1);
                     break;
                 case 'ArrowLeft':
                     // Mundur 10 detik
-                    video.currentTime -= 10;
+                    player.seek(player.getCurrentTime() - 10);
                     break;
                 case 'ArrowRight':
                     // Maju 10 detik
-                    video.currentTime += 10;
+                    player.seek(player.getCurrentTime() + 10);
                     break;
                 case 'Enter':
                     // Toggle Play/Pause
@@ -185,12 +206,8 @@
             }
         });
 
-        // Fungsi untuk mengganti video berdasarkan thumbnail yang dipilih
-        function changeVideo(videoSource) {
-            video.src = videoSource;
-            video.play();
-            playPauseBtn.textContent = 'Pause';
-        }
+        // Inisialisasi player setelah halaman dimuat
+        window.onload = initPlayer;
     </script>
 
 </body>
