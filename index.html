@@ -74,9 +74,7 @@
         }
 
         .carousel {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
+            display: none; /* Hides the slider */
         }
 
         .carousel img {
@@ -90,6 +88,18 @@
             margin-top: 20px;
             text-align: center;
             color: #aaa;
+        }
+
+        .thumbnail {
+            display: inline-block;
+            border: 2px solid transparent;
+            margin: 10px;
+            transition: border 0.3s;
+        }
+
+        .thumbnail:focus {
+            border: 2px solid #00ff7f;
+            outline: none;
         }
     </style>
 </head>
@@ -114,12 +124,12 @@
                 </div>
             </div>
 
-            <div class="carousel">
-                <img src="https://via.placeholder.com/200x300" alt="See You Tomorrow">
-                <img src="https://via.placeholder.com/200x300" alt="Forever and Ever">
-                <img src="https://via.placeholder.com/200x300" alt="My Sassy Princess">
-                <img src="https://via.placeholder.com/200x300" alt="KinnPorsche">
-                <img src="https://via.placeholder.com/200x300" alt="Others">
+            <div class="thumbnails">
+                <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="See You Tomorrow" tabindex="0">
+                <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="Forever and Ever" tabindex="0">
+                <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="My Sassy Princess" tabindex="0">
+                <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="KinnPorsche" tabindex="0">
+                <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="Others" tabindex="0">
             </div>
         </main>
 
