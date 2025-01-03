@@ -90,11 +90,8 @@
             object-fit: cover;
         }
 
-        .slider:focus .slide.active {
-            border: 2px solid #1abc9c;
-        }
-
         .slider.focused {
+            border: 2px solid #1abc9c;
             padding: 10px;
             border-radius: 12px;
         }
@@ -138,20 +135,31 @@
         const leftBarItems = document.querySelectorAll('.menu-item');
         let currentFocusIndex = 0;
         const focusableElements = [...leftBarItems, ...sliders];
+        let currentSliderIndex = 0; // Track currently focused slider
         let sliderIndices = Array(sliders.length).fill(0);
 
         document.addEventListener('keydown', (event) => {
             const activeElement = focusableElements[currentFocusIndex];
 
             if (event.key === 'ArrowDown') {
-                currentFocusIndex = (currentFocusIndex + 1) % focusableElements.length;
-                focusableElements[currentFocusIndex].focus();
+                if (activeElement.classList.contains('slider')) {
+                    currentSliderIndex = (currentSliderIndex + 1) % sliders.length;
+                    focusableElements[leftBarItems.length + currentSliderIndex].focus();
+                } else {
+                    currentFocusIndex = (currentFocusIndex + 1) % focusableElements.length;
+                    focusableElements[currentFocusIndex].focus();
+                }
             } else if (event.key === 'ArrowUp') {
-                currentFocusIndex = (currentFocusIndex - 1 + focusableElements.length) % focusableElements.length;
-                focusableElements[currentFocusIndex].focus();
+                if (activeElement.classList.contains('slider')) {
+                    currentSliderIndex = (currentSliderIndex - 1 + sliders.length) % sliders.length;
+                    focusableElements[leftBarItems.length + currentSliderIndex].focus();
+                } else {
+                    currentFocusIndex = (currentFocusIndex - 1 + focusableElements.length) % focusableElements.length;
+                    focusableElements[currentFocusIndex].focus();
+                }
             } else if (event.key === 'ArrowRight') {
                 if (activeElement.classList.contains('menu-item')) {
-                    currentFocusIndex = leftBarItems.length;
+                    currentFocusIndex = leftBarItems.length + currentSliderIndex;
                     focusableElements[currentFocusIndex].focus();
                 } else if (activeElement.classList.contains('slider')) {
                     const sliderIndex = Array.from(sliders).indexOf(activeElement);
@@ -159,9 +167,6 @@
 
                     if (sliderIndices[sliderIndex] < slides.length - 1) {
                         sliderIndices[sliderIndex]++;
-                        updateSlider(sliders[sliderIndex], sliderIndices[sliderIndex]);
-                    } else {
-                        sliderIndices[sliderIndex] = 0; // Reset ke slide pertama
                         updateSlider(sliders[sliderIndex], sliderIndices[sliderIndex]);
                     }
                 }
