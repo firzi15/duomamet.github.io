@@ -134,52 +134,67 @@
         const sliders = document.querySelectorAll('.slider');
         const leftBarItems = document.querySelectorAll('.menu-item');
         let currentFocusIndex = 0;
-        const focusableElements = [...leftBarItems, ...sliders];
-        let currentSliderIndex = 0; // Track currently focused slider
         let sliderIndices = Array(sliders.length).fill(0);
 
         document.addEventListener('keydown', (event) => {
-            const activeElement = focusableElements[currentFocusIndex];
+            const activeElement = document.activeElement;
 
             if (event.key === 'ArrowDown') {
-                if (activeElement.classList.contains('slider')) {
-                    currentSliderIndex = (currentSliderIndex + 1) % sliders.length;
-                    focusableElements[leftBarItems.length + currentSliderIndex].focus();
-                } else {
-                    currentFocusIndex = (currentFocusIndex + 1) % focusableElements.length;
-                    focusableElements[currentFocusIndex].focus();
+                if (activeElement.classList.contains('slide')) {
+                    const currentSliderIndex = Array.from(sliders).findIndex(slider => slider.contains(activeElement));
+                    const nextSliderIndex = (currentSliderIndex + 1) % sliders.length;
+                    focusSlide(sliders[nextSliderIndex], sliderIndices[nextSliderIndex]);
+                } else if (activeElement.classList.contains('menu-item')) {
+                    focusNext(leftBarItems);
                 }
             } else if (event.key === 'ArrowUp') {
-                if (activeElement.classList.contains('slider')) {
-                    currentSliderIndex = (currentSliderIndex - 1 + sliders.length) % sliders.length;
-                    focusableElements[leftBarItems.length + currentSliderIndex].focus();
-                } else {
-                    currentFocusIndex = (currentFocusIndex - 1 + focusableElements.length) % focusableElements.length;
-                    focusableElements[currentFocusIndex].focus();
+                if (activeElement.classList.contains('slide')) {
+                    const currentSliderIndex = Array.from(sliders).findIndex(slider => slider.contains(activeElement));
+                    const prevSliderIndex = (currentSliderIndex - 1 + sliders.length) % sliders.length;
+                    focusSlide(sliders[prevSliderIndex], sliderIndices[prevSliderIndex]);
+                } else if (activeElement.classList.contains('menu-item')) {
+                    focusPrevious(leftBarItems);
                 }
             } else if (event.key === 'ArrowRight') {
                 if (activeElement.classList.contains('menu-item')) {
-                    currentFocusIndex = leftBarItems.length + currentSliderIndex;
-                    focusableElements[currentFocusIndex].focus();
-                } else if (activeElement.classList.contains('slider')) {
-                    const sliderIndex = Array.from(sliders).indexOf(activeElement);
-                    const slides = sliders[sliderIndex].querySelectorAll('.slide');
-
-                    if (sliderIndices[sliderIndex] < slides.length - 1) {
-                        sliderIndices[sliderIndex]++;
-                        updateSlider(sliders[sliderIndex], sliderIndices[sliderIndex]);
-                    }
+                    sliders[0].focus();
+                    focusSlide(sliders[0], sliderIndices[0]);
+                } else if (activeElement.classList.contains('slide')) {
+                    moveSlide(activeElement, 1);
                 }
             } else if (event.key === 'ArrowLeft') {
-                if (activeElement.classList.contains('slider')) {
-                    const sliderIndex = Array.from(sliders).indexOf(activeElement);
-                    if (sliderIndices[sliderIndex] > 0) {
-                        sliderIndices[sliderIndex]--;
-                        updateSlider(sliders[sliderIndex], sliderIndices[sliderIndex]);
-                    }
+                if (activeElement.classList.contains('slide')) {
+                    moveSlide(activeElement, -1);
                 }
             }
         });
+
+        function moveSlide(activeSlide, direction) {
+            const slider = activeSlide.closest('.slider');
+            const slides = slider.querySelectorAll('.slide');
+            const currentIndex = Array.from(slides).indexOf(activeSlide);
+            const newIndex = (currentIndex + direction + slides.length) % slides.length;
+            sliderIndices[Array.from(sliders).indexOf(slider)] = newIndex;
+            focusSlide(slider, newIndex);
+        }
+
+        function focusSlide(slider, index) {
+            const slides = slider.querySelectorAll('.slide');
+            slides[index].focus();
+            updateSlider(slider, index);
+        }
+
+        function focusNext(elements) {
+            const currentIndex = Array.from(elements).indexOf(document.activeElement);
+            const nextIndex = (currentIndex + 1) % elements.length;
+            elements[nextIndex].focus();
+        }
+
+        function focusPrevious(elements) {
+            const currentIndex = Array.from(elements).indexOf(document.activeElement);
+            const prevIndex = (currentIndex - 1 + elements.length) % elements.length;
+            elements[prevIndex].focus();
+        }
 
         function updateSlider(slider, index) {
             const track = slider.querySelector('.slider-track');
@@ -193,7 +208,7 @@
         }
 
         // Set initial focus
-        focusableElements[currentFocusIndex].focus();
+        leftBarItems[0].focus();
     </script>
 </body>
 </html>
