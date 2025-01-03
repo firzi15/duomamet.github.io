@@ -232,7 +232,7 @@
                     updateMenuFocus();
                 } else if (event.key === 'ArrowRight') {
                     toggleSidebar(false);
-                    moveSlider(currentSliderIndex, 1);
+                    focusSlider((currentSliderIndex + 1) % sliders.length);
                 }
             } else {
                 if (event.key === 'ArrowRight') {
