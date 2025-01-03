@@ -64,6 +64,7 @@
     <script>
         const slides = document.querySelectorAll('.slide');
         const sliderTrack = document.getElementById('sliderTrack');
+        const slider = document.querySelector('.slider');
         let currentIndex = 0;
 
         // Initialize the first slide as active
@@ -78,7 +79,8 @@
         });
 
         function moveSlider(direction) {
-            currentIndex = (currentIndex + direction + slides.length) % slides.length;
+            const maxIndex = slides.length - Math.floor(slider.offsetWidth / (slides[0].offsetWidth + 20));
+            currentIndex = Math.max(0, Math.min(currentIndex + direction, maxIndex));
             updateSlider();
         }
 
