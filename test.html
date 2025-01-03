@@ -158,9 +158,13 @@
                     (currentFocusIndex - 1 + focusableElements.length) % focusableElements.length;
                 focusableElements[currentFocusIndex].focus();
             } else if (event.key === 'ArrowRight') {
-                // Navigate within slider
+                // Handle transition from menu to sliders
                 const currentElement = focusableElements[currentFocusIndex];
-                if (currentElement.classList.contains('slider')) {
+                if (currentElement.classList.contains('menu-item')) {
+                    currentFocusIndex = focusableElements.findIndex(el => el.classList.contains('slider'));
+                    focusableElements[currentFocusIndex].focus();
+                } else if (currentElement.classList.contains('slider')) {
+                    // Navigate within slider
                     const track = currentElement.querySelector('.slider-track');
                     const activeSlide = currentElement.querySelector('.slide.active');
                     const nextSlide = activeSlide.nextElementSibling || track.firstElementChild;
@@ -168,7 +172,6 @@
                     nextSlide.classList.add('active');
                 }
             } else if (event.key === 'ArrowLeft') {
-                // Navigate within slider
                 const currentElement = focusableElements[currentFocusIndex];
                 if (currentElement.classList.contains('slider')) {
                     const track = currentElement.querySelector('.slider-track');
