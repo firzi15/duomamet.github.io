@@ -11,7 +11,7 @@
             margin: 0;
             overflow: hidden;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
         }
@@ -21,6 +21,7 @@
             overflow: visible; /* Allow carousel to exceed bounds */
             width: 80%;
             position: relative;
+            margin: 20px 0;
         }
 
         .slider-track {
@@ -31,7 +32,7 @@
         .slide {
             min-width: 300px;
             height: 200px;
-            margin: 0 5px;
+            margin: 0 10px;
             background-color: #444;
             color: white;
             display: flex;
@@ -54,70 +55,72 @@
 </head>
 <body>
     <div class="slider">
-        <div class="slider-track" id="sliderTrack">
+        <div class="slider-track" id="sliderTrack1">
             <div class="slide" tabindex="0">1</div>
             <div class="slide" tabindex="0">2</div>
             <div class="slide" tabindex="0">3</div>
             <div class="slide" tabindex="0">4</div>
             <div class="slide" tabindex="0">5</div>
-            <div class="slide" tabindex="0">6</div>
-            <div class="slide" tabindex="0">7</div>
-            <div class="slide" tabindex="0">8</div>
-            <div class="slide" tabindex="0">9</div>
-            <div class="slide" tabindex="0">10</div>
         </div>
     </div>
 
-      <div class="slider">
-        <div class="slider-track" id="sliderTrack">
-            <div class="slide" tabindex="0">1</div>
-            <div class="slide" tabindex="0">2</div>
-            <div class="slide" tabindex="0">3</div>
-            <div class="slide" tabindex="0">4</div>
-            <div class="slide" tabindex="0">5</div>
-            <div class="slide" tabindex="0">6</div>
-            <div class="slide" tabindex="0">7</div>
-            <div class="slide" tabindex="0">8</div>
-            <div class="slide" tabindex="0">9</div>
-            <div class="slide" tabindex="0">10</div>
+    <div class="slider">
+        <div class="slider-track" id="sliderTrack2">
+            <div class="slide" tabindex="0">A</div>
+            <div class="slide" tabindex="0">B</div>
+            <div class="slide" tabindex="0">C</div>
+            <div class="slide" tabindex="0">D</div>
+            <div class="slide" tabindex="0">E</div>
+        </div>
+    </div>
+
+    <div class="slider">
+        <div class="slider-track" id="sliderTrack3">
+            <div class="slide" tabindex="0">I</div>
+            <div class="slide" tabindex="0">II</div>
+            <div class="slide" tabindex="0">III</div>
+            <div class="slide" tabindex="0">IV</div>
+            <div class="slide" tabindex="0">V</div>
         </div>
     </div>
 
     <script>
-        const slides = document.querySelectorAll('.slide');
-        const sliderTrack = document.getElementById('sliderTrack');
-        let currentIndex = 0;
+        function initializeSlider(sliderId) {
+            const slides = document.querySelectorAll(`#${sliderId} .slide`);
+            const sliderTrack = document.getElementById(sliderId);
+            let currentIndex = 0;
 
-        // Initialize the first slide as active
-        updateSlider();
-
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'ArrowRight') {
-                moveSlider(1);
-            } else if (event.key === 'ArrowLeft') {
-                moveSlider(-1);
+            function updateSlider() {
+                const offset = -currentIndex * (slides[0].offsetWidth + 20);
+                sliderTrack.style.transform = `translateX(${offset}px)`;
+                slides.forEach((slide, index) => {
+                    if (index === currentIndex) {
+                        slide.classList.add('active');
+                    } else {
+                        slide.classList.remove('active');
+                    }
+                });
             }
-        });
 
-        function moveSlider(direction) {
-            currentIndex = (currentIndex + direction + slides.length) % slides.length;
+            function moveSlider(direction) {
+                currentIndex = (currentIndex + direction + slides.length) % slides.length;
+                updateSlider();
+            }
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'ArrowRight') {
+                    moveSlider(1);
+                } else if (event.key === 'ArrowLeft') {
+                    moveSlider(-1);
+                }
+            });
+
             updateSlider();
         }
 
-        function updateSlider() {
-            // Update the transform property to focus the current slide
-            const offset = -currentIndex * (slides[0].offsetWidth + 20); // Slide width + margin
-            sliderTrack.style.transform = `translateX(${offset}px)`;
-
-            // Update active class
-            slides.forEach((slide, index) => {
-                if (index === currentIndex) {
-                    slide.classList.add('active');
-                } else {
-                    slide.classList.remove('active');
-                }
-            });
-        }
+        initializeSlider('sliderTrack1');
+        initializeSlider('sliderTrack2');
+        initializeSlider('sliderTrack3');
     </script>
 </body>
 </html>
