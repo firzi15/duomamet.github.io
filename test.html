@@ -131,16 +131,6 @@
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=E" alt="Slide E"></div>
             </div>
         </div>
-
-        <div class="slider" tabindex="0" id="slider3">
-            <div class="slider-track">
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=I" alt="Slide I"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=II" alt="Slide II"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=III" alt="Slide III"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=IV" alt="Slide IV"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=V" alt="Slide V"></div>
-            </div>
-        </div>
     </div>
 
     <script>
@@ -148,36 +138,55 @@
         const leftBarItems = document.querySelectorAll('.menu-item');
         let currentFocusIndex = 0;
         const focusableElements = [...leftBarItems, ...sliders];
+        let sliderIndices = Array(sliders.length).fill(0);
 
         document.addEventListener('keydown', (event) => {
             const activeElement = focusableElements[currentFocusIndex];
 
             if (event.key === 'ArrowDown') {
-                if (activeElement.classList.contains('slider')) {
-                    currentFocusIndex = (currentFocusIndex + 1) % sliders.length + leftBarItems.length;
-                } else {
-                    currentFocusIndex = (currentFocusIndex + 1) % focusableElements.length;
-                }
+                currentFocusIndex = (currentFocusIndex + 1) % focusableElements.length;
                 focusableElements[currentFocusIndex].focus();
             } else if (event.key === 'ArrowUp') {
-                if (activeElement.classList.contains('slider')) {
-                    currentFocusIndex =
-                        (currentFocusIndex - 1 + sliders.length) % sliders.length + leftBarItems.length;
-                } else {
-                    currentFocusIndex =
-                        (currentFocusIndex - 1 + focusableElements.length) % focusableElements.length;
-                }
+                currentFocusIndex = (currentFocusIndex - 1 + focusableElements.length) % focusableElements.length;
                 focusableElements[currentFocusIndex].focus();
             } else if (event.key === 'ArrowRight') {
                 if (activeElement.classList.contains('menu-item')) {
-                    currentFocusIndex = leftBarItems.length; // Fokus pada slider pertama
+                    currentFocusIndex = leftBarItems.length;
                     focusableElements[currentFocusIndex].focus();
+                } else if (activeElement.classList.contains('slider')) {
+                    const sliderIndex = Array.from(sliders).indexOf(activeElement);
+                    if (sliderIndices[sliderIndex] < sliders[sliderIndex].querySelectorAll('.slide').length - 1) {
+                        sliderIndices[sliderIndex]++;
+                        updateSlider(sliders[sliderIndex], sliderIndices[sliderIndex]);
+                    } else {
+                        currentFocusIndex = 0; // Kembali ke sidebar
+                        focusableElements[currentFocusIndex].focus();
+                    }
                 }
-            } else if (event.key === 'ArrowLeft' && activeElement.classList.contains('slider')) {
-                currentFocusIndex = 0; // Kembali ke menu pertama
-                focusableElements[currentFocusIndex].focus();
+            } else if (event.key === 'ArrowLeft') {
+                if (activeElement.classList.contains('slider')) {
+                    const sliderIndex = Array.from(sliders).indexOf(activeElement);
+                    if (sliderIndices[sliderIndex] > 0) {
+                        sliderIndices[sliderIndex]--;
+                        updateSlider(sliders[sliderIndex], sliderIndices[sliderIndex]);
+                    } else {
+                        currentFocusIndex = 0; // Kembali ke sidebar
+                        focusableElements[currentFocusIndex].focus();
+                    }
+                }
             }
         });
+
+        function updateSlider(slider, index) {
+            const track = slider.querySelector('.slider-track');
+            const slides = slider.querySelectorAll('.slide');
+            const offset = -index * (slides[0].offsetWidth + 10);
+            track.style.transform = `translateX(${offset}px)`;
+
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+        }
 
         // Set initial focus
         focusableElements[currentFocusIndex].focus();
