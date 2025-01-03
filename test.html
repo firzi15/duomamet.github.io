@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unified Carousel with Sidebar</title>
+    <title>Arrow Pad Navigation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -102,18 +102,18 @@
 </head>
 <body>
     <div class="left-bar">
-        <div class="menu-item" tabindex="0">Popular</div>
-        <div class="menu-item" tabindex="0">Editor's Picks</div>
-        <div class="menu-item" tabindex="0">Scary</div>
-        <div class="menu-item" tabindex="0">Comedy</div>
-        <div class="menu-item" tabindex="0">Animals</div>
-        <div class="menu-item" tabindex="0">Music</div>
-        <div class="menu-item" tabindex="0">Art</div>
+        <div class="menu-item" tabindex="0" data-index="0">Popular</div>
+        <div class="menu-item" tabindex="0" data-index="1">Editor's Picks</div>
+        <div class="menu-item" tabindex="0" data-index="2">Scary</div>
+        <div class="menu-item" tabindex="0" data-index="3">Comedy</div>
+        <div class="menu-item" tabindex="0" data-index="4">Animals</div>
+        <div class="menu-item" tabindex="0" data-index="5">Music</div>
+        <div class="menu-item" tabindex="0" data-index="6">Art</div>
     </div>
 
     <div class="container" id="carouselContainer">
-        <div class="slider" tabindex="0" id="slider1">
-            <div class="slider-track" id="sliderTrack1">
+        <div class="slider" tabindex="0" data-index="7" id="slider1">
+            <div class="slider-track">
                 <div class="slide active"><img src="https://via.placeholder.com/200x120?text=1" alt="Slide 1"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=2" alt="Slide 2"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=3" alt="Slide 3"></div>
@@ -122,8 +122,8 @@
             </div>
         </div>
 
-        <div class="slider" tabindex="0" id="slider2">
-            <div class="slider-track" id="sliderTrack2">
+        <div class="slider" tabindex="0" data-index="8" id="slider2">
+            <div class="slider-track">
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=A" alt="Slide A"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=B" alt="Slide B"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=C" alt="Slide C"></div>
@@ -132,9 +132,56 @@
             </div>
         </div>
 
-        <div class="slider" tabindex="0" id="slider3">
-            <div class="slider-track" id="sliderTrack3">
+        <div class="slider" tabindex="0" data-index="9" id="slider3">
+            <div class="slider-track">
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=I" alt="Slide I"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=II" alt="Slide II"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=III" alt="Slide III"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=IV" alt="Slide IV"
+                <div class="slide"><img src="https://via.placeholder.com/200x120?text=IV" alt="Slide IV"></div>
+                <div class="slide"><img src="https://via.placeholder.com/200x120?text=V" alt="Slide V"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const focusableElements = [...document.querySelectorAll('.menu-item, .slider')];
+        let currentFocusIndex = 0;
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowDown') {
+                // Move focus down
+                currentFocusIndex = (currentFocusIndex + 1) % focusableElements.length;
+                focusableElements[currentFocusIndex].focus();
+            } else if (event.key === 'ArrowUp') {
+                // Move focus up
+                currentFocusIndex =
+                    (currentFocusIndex - 1 + focusableElements.length) % focusableElements.length;
+                focusableElements[currentFocusIndex].focus();
+            } else if (event.key === 'ArrowRight') {
+                // Navigate within slider
+                const currentElement = focusableElements[currentFocusIndex];
+                if (currentElement.classList.contains('slider')) {
+                    const track = currentElement.querySelector('.slider-track');
+                    const activeSlide = currentElement.querySelector('.slide.active');
+                    const nextSlide = activeSlide.nextElementSibling || track.firstElementChild;
+                    activeSlide.classList.remove('active');
+                    nextSlide.classList.add('active');
+                }
+            } else if (event.key === 'ArrowLeft') {
+                // Navigate within slider
+                const currentElement = focusableElements[currentFocusIndex];
+                if (currentElement.classList.contains('slider')) {
+                    const track = currentElement.querySelector('.slider-track');
+                    const activeSlide = currentElement.querySelector('.slide.active');
+                    const prevSlide = activeSlide.previousElementSibling || track.lastElementChild;
+                    activeSlide.classList.remove('active');
+                    prevSlide.classList.add('active');
+                }
+            }
+        });
+
+        // Set initial focus
+        focusableElements[currentFocusIndex].focus();
+    </script>
+</body>
+</html>
