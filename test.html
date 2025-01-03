@@ -32,13 +32,10 @@
             cursor: pointer;
             font-size: 18px;
             transition: background 0.3s, color 0.3s;
+            outline: none;
         }
 
-        .menu-item:hover {
-            background-color: #444;
-        }
-
-        .menu-item.active {
+        .menu-item:focus {
             background-color: #1abc9c;
             color: white;
         }
@@ -57,6 +54,7 @@
             overflow: visible;
             width: 80%;
             position: relative;
+            outline: none;
         }
 
         .slider-track {
@@ -67,7 +65,7 @@
         .slide {
             min-width: 200px;
             height: 120px;
-            margin: 0 5px; /* Kurangi jarak antar slide */
+            margin: 0 5px;
             background-color: #444;
             color: white;
             display: flex;
@@ -92,34 +90,29 @@
             object-fit: cover;
         }
 
+        .slider:focus .slide.active {
+            border: 2px solid #1abc9c;
+        }
+
         .slider.focused {
             padding: 10px;
             border-radius: 12px;
-        }
-
-        .slider:not(.focused) .slide {
-            transition: none;
-        }
-
-        .slider:not(.focused) .slide.active {
-            opacity: 0.5;
-            transform: scale(0.8);
         }
     </style>
 </head>
 <body>
     <div class="left-bar">
-        <div class="menu-item active">Popular</div>
-        <div class="menu-item">Editor's Picks</div>
-        <div class="menu-item">Scary</div>
-        <div class="menu-item">Comedy</div>
-        <div class="menu-item">Animals</div>
-        <div class="menu-item">Music</div>
-        <div class="menu-item">Art</div>
+        <div class="menu-item" tabindex="0">Popular</div>
+        <div class="menu-item" tabindex="0">Editor's Picks</div>
+        <div class="menu-item" tabindex="0">Scary</div>
+        <div class="menu-item" tabindex="0">Comedy</div>
+        <div class="menu-item" tabindex="0">Animals</div>
+        <div class="menu-item" tabindex="0">Music</div>
+        <div class="menu-item" tabindex="0">Art</div>
     </div>
 
     <div class="container" id="carouselContainer">
-        <div class="slider focused" id="slider1">
+        <div class="slider" tabindex="0" id="slider1">
             <div class="slider-track" id="sliderTrack1">
                 <div class="slide active"><img src="https://via.placeholder.com/200x120?text=1" alt="Slide 1"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=2" alt="Slide 2"></div>
@@ -129,11 +122,19 @@
             </div>
         </div>
 
-        <div class="slider" id="slider2">
+        <div class="slider" tabindex="0" id="slider2">
             <div class="slider-track" id="sliderTrack2">
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=A" alt="Slide A"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=B" alt="Slide B"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=C" alt="Slide C"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=D" alt="Slide D"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=E" alt="Slide E"></div>
-          
+            </div>
+        </div>
+
+        <div class="slider" tabindex="0" id="slider3">
+            <div class="slider-track" id="sliderTrack3">
+                <div class="slide"><img src="https://via.placeholder.com/200x120?text=I" alt="Slide I"></div>
+                <div class="slide"><img src="https://via.placeholder.com/200x120?text=II" alt="Slide II"></div>
+                <div class="slide"><img src="https://via.placeholder.com/200x120?text=III" alt="Slide III"></div>
+                <div class="slide"><img src="https://via.placeholder.com/200x120?text=IV" alt="Slide IV"
