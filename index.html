@@ -101,6 +101,19 @@
             border: 2px solid #00ff7f;
             outline: none;
         }
+
+        .thumbnails {
+            display: flex;
+            overflow: hidden;
+            justify-content: center;
+            position: relative;
+        }
+
+        .thumbnail-wrapper {
+            display: flex;
+            gap: 10px;
+            transition: transform 0.3s;
+        }
     </style>
 </head>
 <body>
@@ -125,11 +138,13 @@
             </div>
 
             <div class="thumbnails">
-                <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="See You Tomorrow" tabindex="0">
-                <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="Forever and Ever" tabindex="0">
-                <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="My Sassy Princess" tabindex="0">
-                <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="KinnPorsche" tabindex="0">
-                <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="Others" tabindex="0">
+                <div class="thumbnail-wrapper">
+                    <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="See You Tomorrow" tabindex="0">
+                    <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="Forever and Ever" tabindex="0">
+                    <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="My Sassy Princess" tabindex="0">
+                    <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="KinnPorsche" tabindex="0">
+                    <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="Others" tabindex="0">
+                </div>
             </div>
         </main>
 
@@ -137,5 +152,29 @@
             &copy; 2025 iQIYI. All Rights Reserved.
         </footer>
     </div>
+
+    <script>
+        const thumbnailsWrapper = document.querySelector('.thumbnail-wrapper');
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        let currentIndex = 0;
+
+        const focusThumbnail = (index) => {
+            thumbnails[index].focus();
+            const offset = -index * (thumbnails[0].offsetWidth + 10);
+            thumbnailsWrapper.style.transform = `translateX(${offset}px)`;
+        };
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                currentIndex = (currentIndex + 1) % thumbnails.length;
+                focusThumbnail(currentIndex);
+            } else if (e.key === 'ArrowLeft') {
+                currentIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
+                focusThumbnail(currentIndex);
+            }
+        });
+
+        focusThumbnail(currentIndex); // Focus the first thumbnail initially
+    </script>
 </body>
 </html>
