@@ -22,6 +22,7 @@
             width: 80%;
             position: relative;
             margin: 20px 0;
+            outline: none; /* Remove default focus outline */
         }
 
         .slider-track {
@@ -51,40 +52,53 @@
             border: 4px solid #fff;
         }
 
+        .slider:focus {
+            outline: 2px solid #fff; /* Highlight focused slider */
+        }
+
     </style>
 </head>
 <body>
-    <div class="slider">
+    <div class="slider" tabindex="0" id="slider1">
         <div class="slider-track" id="sliderTrack1">
-            <div class="slide" tabindex="0">1</div>
-            <div class="slide" tabindex="0">2</div>
-            <div class="slide" tabindex="0">3</div>
-            <div class="slide" tabindex="0">4</div>
-            <div class="slide" tabindex="0">5</div>
+            <div class="slide">1</div>
+            <div class="slide">2</div>
+            <div class="slide">3</div>
+            <div class="slide">4</div>
+            <div class="slide">5</div>
         </div>
     </div>
 
-    <div class="slider">
+    <div class="slider" tabindex="0" id="slider2">
         <div class="slider-track" id="sliderTrack2">
-            <div class="slide" tabindex="0">A</div>
-            <div class="slide" tabindex="0">B</div>
-            <div class="slide" tabindex="0">C</div>
-            <div class="slide" tabindex="0">D</div>
-            <div class="slide" tabindex="0">E</div>
+            <div class="slide">A</div>
+            <div class="slide">B</div>
+            <div class="slide">C</div>
+            <div class="slide">D</div>
+            <div class="slide">E</div>
         </div>
     </div>
 
-    <div class="slider">
+    <div class="slider" tabindex="0" id="slider3">
         <div class="slider-track" id="sliderTrack3">
-            <div class="slide" tabindex="0">I</div>
-            <div class="slide" tabindex="0">II</div>
-            <div class="slide" tabindex="0">III</div>
-            <div class="slide" tabindex="0">IV</div>
-            <div class="slide" tabindex="0">V</div>
+            <div class="slide">I</div>
+            <div class="slide">II</div>
+            <div class="slide">III</div>
+            <div class="slide">IV</div>
+            <div class="slide">V</div>
         </div>
     </div>
 
     <script>
+        let currentSliderIndex = 0;
+        const sliders = document.querySelectorAll('.slider');
+
+        function focusSlider(index) {
+            sliders[currentSliderIndex].blur();
+            currentSliderIndex = index;
+            sliders[currentSliderIndex].focus();
+        }
+
         function initializeSlider(sliderId) {
             const slides = document.querySelectorAll(`#${sliderId} .slide`);
             const sliderTrack = document.getElementById(sliderId);
@@ -119,14 +133,22 @@
             updateSlider();
         }
 
-        // Make sliders focusable and initialize them
-        document.querySelectorAll('.slider-track').forEach(track => {
-            track.setAttribute('tabindex', '0');
+        sliders.forEach((slider, index) => {
+            slider.addEventListener('keydown', (event) => {
+                if (event.key === 'ArrowUp') {
+                    focusSlider((currentSliderIndex - 1 + sliders.length) % sliders.length);
+                } else if (event.key === 'ArrowDown') {
+                    focusSlider((currentSliderIndex + 1) % sliders.length);
+                }
+            });
         });
 
         initializeSlider('sliderTrack1');
         initializeSlider('sliderTrack2');
         initializeSlider('sliderTrack3');
+
+        // Set initial focus
+        focusSlider(0);
     </script>
 </body>
 </html>
