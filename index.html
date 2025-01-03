@@ -18,27 +18,9 @@
 
         .slider {
             display: flex;
-            overflow: hidden;
+            overflow: visible; /* Allow carousel to exceed bounds */
             width: 80%;
             position: relative;
-        }
-
-        .slider::before, .slider::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 100px;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1;
-        }
-
-        .slider::before {
-            left: 0;
-        }
-
-        .slider::after {
-            right: 0;
         }
 
         .slider-track {
