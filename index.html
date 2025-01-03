@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netflix-Style Slider</title>
+    <title>Unified Carousel Navigation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,13 +16,18 @@
             height: 100vh;
         }
 
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
         .slider {
             display: flex;
-            overflow: visible; /* Allow carousel to exceed bounds */
+            overflow: visible;
             width: 80%;
             position: relative;
-            margin: 20px 0;
-            outline: none; /* Remove default focus outline */
         }
 
         .slider-track {
@@ -52,100 +57,93 @@
             border: 4px solid #fff;
         }
 
-        .slider:focus {
-            outline: 2px solid #fff; /* Highlight focused slider */
+        .focused {
+            outline: 2px solid #fff;
         }
-
     </style>
 </head>
 <body>
-    <div class="slider" tabindex="0" id="slider1">
-        <div class="slider-track" id="sliderTrack1">
-            <div class="slide">1</div>
-            <div class="slide">2</div>
-            <div class="slide">3</div>
-            <div class="slide">4</div>
-            <div class="slide">5</div>
+    <div class="container" id="carouselContainer">
+        <div class="slider" id="slider1">
+            <div class="slider-track" id="sliderTrack1">
+                <div class="slide">1</div>
+                <div class="slide">2</div>
+                <div class="slide">3</div>
+                <div class="slide">4</div>
+                <div class="slide">5</div>
+            </div>
         </div>
-    </div>
 
-    <div class="slider" tabindex="0" id="slider2">
-        <div class="slider-track" id="sliderTrack2">
-            <div class="slide">A</div>
-            <div class="slide">B</div>
-            <div class="slide">C</div>
-            <div class="slide">D</div>
-            <div class="slide">E</div>
+        <div class="slider" id="slider2">
+            <div class="slider-track" id="sliderTrack2">
+                <div class="slide">A</div>
+                <div class="slide">B</div>
+                <div class="slide">C</div>
+                <div class="slide">D</div>
+                <div class="slide">E</div>
+            </div>
         </div>
-    </div>
 
-    <div class="slider" tabindex="0" id="slider3">
-        <div class="slider-track" id="sliderTrack3">
-            <div class="slide">I</div>
-            <div class="slide">II</div>
-            <div class="slide">III</div>
-            <div class="slide">IV</div>
-            <div class="slide">V</div>
+        <div class="slider" id="slider3">
+            <div class="slider-track" id="sliderTrack3">
+                <div class="slide">I</div>
+                <div class="slide">II</div>
+                <div class="slide">III</div>
+                <div class="slide">IV</div>
+                <div class="slide">V</div>
+            </div>
         </div>
     </div>
 
     <script>
-        let currentSliderIndex = 0;
+        const container = document.getElementById('carouselContainer');
         const sliders = document.querySelectorAll('.slider');
+        let currentSliderIndex = 0;
+        let currentIndices = [0, 0, 0];
+
+        function updateSlider(sliderIndex) {
+            const sliderTrack = sliders[sliderIndex].querySelector('.slider-track');
+            const slides = sliders[sliderIndex].querySelectorAll('.slide');
+            const currentIndex = currentIndices[sliderIndex];
+            const offset = -currentIndex * (slides[0].offsetWidth + 20);
+
+            sliderTrack.style.transform = `translateX(${offset}px)`;
+
+            slides.forEach((slide, index) => {
+                if (index === currentIndex) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+        }
+
+        function moveSlider(sliderIndex, direction) {
+            const slides = sliders[sliderIndex].querySelectorAll('.slide');
+            currentIndices[sliderIndex] = (currentIndices[sliderIndex] + direction + slides.length) % slides.length;
+            updateSlider(sliderIndex);
+        }
 
         function focusSlider(index) {
-            sliders[currentSliderIndex].blur();
+            sliders[currentSliderIndex].classList.remove('focused');
             currentSliderIndex = index;
-            sliders[currentSliderIndex].focus();
+            sliders[currentSliderIndex].classList.add('focused');
         }
 
-        function initializeSlider(sliderId) {
-            const slides = document.querySelectorAll(`#${sliderId} .slide`);
-            const sliderTrack = document.getElementById(sliderId);
-            let currentIndex = 0;
-
-            function updateSlider() {
-                const offset = -currentIndex * (slides[0].offsetWidth + 20);
-                sliderTrack.style.transform = `translateX(${offset}px)`;
-                slides.forEach((slide, index) => {
-                    if (index === currentIndex) {
-                        slide.classList.add('active');
-                    } else {
-                        slide.classList.remove('active');
-                    }
-                });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') {
+                moveSlider(currentSliderIndex, 1);
+            } else if (event.key === 'ArrowLeft') {
+                moveSlider(currentSliderIndex, -1);
+            } else if (event.key === 'ArrowDown') {
+                focusSlider((currentSliderIndex + 1) % sliders.length);
+            } else if (event.key === 'ArrowUp') {
+                focusSlider((currentSliderIndex - 1 + sliders.length) % sliders.length);
             }
-
-            function moveSlider(direction) {
-                currentIndex = (currentIndex + direction + slides.length) % slides.length;
-                updateSlider();
-            }
-
-            // Add keydown event listener only for the current slider
-            document.getElementById(sliderId).addEventListener('keydown', (event) => {
-                if (event.key === 'ArrowRight') {
-                    moveSlider(1);
-                } else if (event.key === 'ArrowLeft') {
-                    moveSlider(-1);
-                }
-            });
-
-            updateSlider();
-        }
-
-        sliders.forEach((slider, index) => {
-            slider.addEventListener('keydown', (event) => {
-                if (event.key === 'ArrowUp') {
-                    focusSlider((currentSliderIndex - 1 + sliders.length) % sliders.length);
-                } else if (event.key === 'ArrowDown') {
-                    focusSlider((currentSliderIndex + 1) % sliders.length);
-                }
-            });
         });
 
-        initializeSlider('sliderTrack1');
-        initializeSlider('sliderTrack2');
-        initializeSlider('sliderTrack3');
+        // Initialize all sliders
+        sliders.forEach((_, index) => updateSlider(index));
 
         // Set initial focus
         focusSlider(0);
