@@ -107,7 +107,8 @@
                 updateSlider();
             }
 
-            document.addEventListener('keydown', (event) => {
+            // Add keydown event listener only for the current slider
+            document.getElementById(sliderId).addEventListener('keydown', (event) => {
                 if (event.key === 'ArrowRight') {
                     moveSlider(1);
                 } else if (event.key === 'ArrowLeft') {
@@ -117,6 +118,11 @@
 
             updateSlider();
         }
+
+        // Make sliders focusable and initialize them
+        document.querySelectorAll('.slider-track').forEach(track => {
+            track.setAttribute('tabindex', '0');
+        });
 
         initializeSlider('sliderTrack1');
         initializeSlider('sliderTrack2');
