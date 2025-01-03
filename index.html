@@ -38,7 +38,7 @@
         .slide {
             min-width: 200px;
             height: 120px;
-            margin: 0 10px;
+            margin: 0 5px; /* Kurangi jarak antar slide */
             background-color: #444;
             color: white;
             display: flex;
@@ -121,7 +121,7 @@
             const sliderTrack = sliders[sliderIndex].querySelector('.slider-track');
             const slides = sliders[sliderIndex].querySelectorAll('.slide');
             const currentIndex = currentIndices[sliderIndex];
-            const offset = -currentIndex * (slides[0].offsetWidth + 20);
+            const offset = -currentIndex * (slides[0].offsetWidth + 10); // Update offset calculation for closer slides
 
             sliderTrack.style.transform = `translateX(${offset}px)`;
 
@@ -142,7 +142,7 @@
 
         function focusSlider(index) {
             sliders[currentSliderIndex].classList.remove('focused');
-            updateSlider(currentSliderIndex); // Ensure all slides in the old slider are non-active
+            updateSlider(currentSliderIndex);
 
             currentSliderIndex = index;
             sliders[currentSliderIndex].classList.add('focused');
