@@ -3,188 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TV Interface</title>
+    <title>Netflix-Style Slider</title>
     <style>
         body {
-            margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #232323;
-        }
-
-        .header .menu {
-            display: flex;
-            gap: 15px;
-        }
-
-        .header .menu a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .header .menu a.active {
-            color: #00ff7f;
-        }
-
-        .main-content {
-            text-align: center;
-        }
-
-        .main-banner {
-            position: relative;
-            margin: 20px 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)),
-                url('https://via.placeholder.com/1200x400'); /* Replace with your image URL */
-            background-size: cover;
-            background-position: center;
-            height: 400px;
-            border-radius: 8px;
-        }
-
-        .main-banner .info {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            color: #fff;
-        }
-
-        .main-banner .info h1 {
+            background-color: #000;
             margin: 0;
-            font-size: 32px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
-        .main-banner .info p {
-            font-size: 16px;
-        }
-
-        .carousel {
-            display: none; /* Hides the slider */
-        }
-
-        .carousel img {
-            width: 200px;
-            height: 300px;
-            border-radius: 8px;
-            flex-shrink: 0;
-        }
-
-        .footer {
-            margin-top: 20px;
-            text-align: center;
-            color: #aaa;
-        }
-
-        .thumbnail {
-            display: inline-block;
-            border: 2px solid transparent;
-            margin: 10px;
-            transition: border 0.3s;
-        }
-
-        .thumbnail:focus {
-            border: 2px solid #00ff7f;
-            outline: none;
-        }
-
-        .thumbnails {
+        .slider {
             display: flex;
             overflow: hidden;
-            justify-content: center;
-            position: relative;
+            width: 80%;
         }
 
-        .thumbnail-wrapper {
+        .slider-track {
             display: flex;
-            gap: 10px;
-            transition: transform 0.3s;
+            transition: transform 0.3s ease-in-out;
         }
 
-        [tabindex]:focus {
-            border: 3px solid #00ff7f;
-            outline: none;
+        .slide {
+            min-width: 300px;
+            height: 200px;
+            margin: 0 10px;
+            background-color: #444;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            border-radius: 10px;
+            opacity: 0.5;
+            transform: scale(0.8);
+            transition: opacity 0.3s, transform 0.3s;
         }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
     </style>
 </head>
 <body>
-    <div class="container" tabindex="0">
-        <header class="header" tabindex="0">
-            <div class="logo" tabindex="0">iQIYI</div>
-            <nav class="menu" tabindex="0">
-                <a href="#" class="active" tabindex="0">For You</a>
-                <a href="#" tabindex="0">Drama</a>
-                <a href="#" tabindex="0">Movie</a>
-                <a href="#" tabindex="0">Variety Shows</a>
-                <a href="#" tabindex="0">Anime</a>
-            </nav>
-        </header>
-
-        <main class="main-content" tabindex="0">
-            <div class="main-banner" tabindex="0">
-                <div class="info" tabindex="0">
-                    <h1 tabindex="0">SEE YOU TOMORROW</h1>
-                    <p tabindex="0">2022 | Updated to 10/Total 12 Episodes</p>
-                </div>
-            </div>
-
-            <div class="thumbnails" tabindex="0">
-                <div class="thumbnail-wrapper" tabindex="0">
-                    <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="See You Tomorrow" tabindex="0">
-                    <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="Forever and Ever" tabindex="0">
-                    <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="My Sassy Princess" tabindex="0">
-                    <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="KinnPorsche" tabindex="0">
-                    <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="Others" tabindex="0">
-                    <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="New Series 1" tabindex="0">
-                    <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="New Series 2" tabindex="0">
-                    <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="New Series 3" tabindex="0">
-                    <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="New Series 4" tabindex="0">
-                    <img class="thumbnail" src="https://via.placeholder.com/200x300" alt="New Series 5" tabindex="0">
-                </div>
-            </div>
-        </main>
-
-        <footer class="footer" tabindex="0">
-            &copy; 2025 iQIYI. All Rights Reserved.
-        </footer>
+    <div class="slider">
+        <div class="slider-track" id="sliderTrack">
+            <div class="slide" tabindex="0">1</div>
+            <div class="slide" tabindex="0">2</div>
+            <div class="slide" tabindex="0">3</div>
+            <div class="slide" tabindex="0">4</div>
+            <div class="slide" tabindex="0">5</div>
+        </div>
     </div>
 
     <script>
-        const thumbnailsWrapper = document.querySelector('.thumbnail-wrapper');
-        const thumbnails = document.querySelectorAll('.thumbnail');
+        const slides = document.querySelectorAll('.slide');
+        const sliderTrack = document.getElementById('sliderTrack');
         let currentIndex = 0;
 
-        const focusThumbnail = (index) => {
-            thumbnails[index].focus();
-            const offset = -index * (thumbnails[0].offsetWidth + 10);
-            thumbnailsWrapper.style.transform = `translateX(${offset}px)`;
-        };
+        // Initialize the first slide as active
+        updateSlider();
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') {
-                currentIndex = (currentIndex + 1) % thumbnails.length;
-                focusThumbnail(currentIndex);
-            } else if (e.key === 'ArrowLeft') {
-                currentIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
-                focusThumbnail(currentIndex);
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') {
+                moveSlider(1);
+            } else if (event.key === 'ArrowLeft') {
+                moveSlider(-1);
             }
         });
 
-        focusThumbnail(currentIndex); // Focus the first thumbnail initially
+        function moveSlider(direction) {
+            currentIndex = (currentIndex + direction + slides.length) % slides.length;
+            updateSlider();
+        }
+
+        function updateSlider() {
+            // Update the transform property to focus the current slide
+            const offset = -currentIndex * (slides[0].offsetWidth + 20); // Slide width + margin
+            sliderTrack.style.transform = `translateX(${offset}px)`;
+
+            // Update active class
+            slides.forEach((slide, index) => {
+                if (index === currentIndex) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+        }
     </script>
 </body>
 </html>
