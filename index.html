@@ -71,6 +71,11 @@
         .slider:not(.focused) .slide {
             transition: none;
         }
+
+        .slider:not(.focused) .slide.active {
+            opacity: 0.5;
+            transform: scale(0.8);
+        }
     </style>
 </head>
 <body>
@@ -121,7 +126,7 @@
             sliderTrack.style.transform = `translateX(${offset}px)`;
 
             slides.forEach((slide, index) => {
-                if (index === currentIndex) {
+                if (index === currentIndex && sliders[sliderIndex].classList.contains('focused')) {
                     slide.classList.add('active');
                 } else {
                     slide.classList.remove('active');
@@ -137,6 +142,8 @@
 
         function focusSlider(index) {
             sliders[currentSliderIndex].classList.remove('focused');
+            updateSlider(currentSliderIndex); // Ensure all slides in the old slider are non-active
+
             currentSliderIndex = index;
             sliders[currentSliderIndex].classList.add('focused');
             updateSlider(currentSliderIndex);
