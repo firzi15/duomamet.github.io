@@ -102,17 +102,17 @@
 </head>
 <body>
     <div class="left-bar">
-        <div class="menu-item" tabindex="0" data-index="0">Popular</div>
-        <div class="menu-item" tabindex="0" data-index="1">Editor's Picks</div>
-        <div class="menu-item" tabindex="0" data-index="2">Scary</div>
-        <div class="menu-item" tabindex="0" data-index="3">Comedy</div>
-        <div class="menu-item" tabindex="0" data-index="4">Animals</div>
-        <div class="menu-item" tabindex="0" data-index="5">Music</div>
-        <div class="menu-item" tabindex="0" data-index="6">Art</div>
+        <div class="menu-item" tabindex="0">Popular</div>
+        <div class="menu-item" tabindex="0">Editor's Picks</div>
+        <div class="menu-item" tabindex="0">Scary</div>
+        <div class="menu-item" tabindex="0">Comedy</div>
+        <div class="menu-item" tabindex="0">Animals</div>
+        <div class="menu-item" tabindex="0">Music</div>
+        <div class="menu-item" tabindex="0">Art</div>
     </div>
 
-    <div class="container" id="carouselContainer">
-        <div class="slider" tabindex="0" data-index="7" id="slider1">
+    <div class="container">
+        <div class="slider" tabindex="0" id="slider1">
             <div class="slider-track">
                 <div class="slide active"><img src="https://via.placeholder.com/200x120?text=1" alt="Slide 1"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=2" alt="Slide 2"></div>
@@ -122,7 +122,7 @@
             </div>
         </div>
 
-        <div class="slider" tabindex="0" data-index="8" id="slider2">
+        <div class="slider" tabindex="0" id="slider2">
             <div class="slider-track">
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=A" alt="Slide A"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=B" alt="Slide B"></div>
@@ -132,7 +132,7 @@
             </div>
         </div>
 
-        <div class="slider" tabindex="0" data-index="9" id="slider3">
+        <div class="slider" tabindex="0" id="slider3">
             <div class="slider-track">
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=I" alt="Slide I"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=II" alt="Slide II"></div>
@@ -144,42 +144,38 @@
     </div>
 
     <script>
-        const focusableElements = [...document.querySelectorAll('.menu-item, .slider')];
+        const sliders = document.querySelectorAll('.slider');
+        const leftBarItems = document.querySelectorAll('.menu-item');
         let currentFocusIndex = 0;
+        const focusableElements = [...leftBarItems, ...sliders];
 
         document.addEventListener('keydown', (event) => {
+            const activeElement = focusableElements[currentFocusIndex];
+
             if (event.key === 'ArrowDown') {
-                // Move focus down
-                currentFocusIndex = (currentFocusIndex + 1) % focusableElements.length;
+                if (activeElement.classList.contains('slider')) {
+                    currentFocusIndex = (currentFocusIndex + 1) % sliders.length + leftBarItems.length;
+                } else {
+                    currentFocusIndex = (currentFocusIndex + 1) % focusableElements.length;
+                }
                 focusableElements[currentFocusIndex].focus();
             } else if (event.key === 'ArrowUp') {
-                // Move focus up
-                currentFocusIndex =
-                    (currentFocusIndex - 1 + focusableElements.length) % focusableElements.length;
+                if (activeElement.classList.contains('slider')) {
+                    currentFocusIndex =
+                        (currentFocusIndex - 1 + sliders.length) % sliders.length + leftBarItems.length;
+                } else {
+                    currentFocusIndex =
+                        (currentFocusIndex - 1 + focusableElements.length) % focusableElements.length;
+                }
                 focusableElements[currentFocusIndex].focus();
             } else if (event.key === 'ArrowRight') {
-                // Handle transition from menu to sliders
-                const currentElement = focusableElements[currentFocusIndex];
-                if (currentElement.classList.contains('menu-item')) {
-                    currentFocusIndex = focusableElements.findIndex(el => el.classList.contains('slider'));
+                if (activeElement.classList.contains('menu-item')) {
+                    currentFocusIndex = leftBarItems.length; // Fokus pada slider pertama
                     focusableElements[currentFocusIndex].focus();
-                } else if (currentElement.classList.contains('slider')) {
-                    // Navigate within slider
-                    const track = currentElement.querySelector('.slider-track');
-                    const activeSlide = currentElement.querySelector('.slide.active');
-                    const nextSlide = activeSlide.nextElementSibling || track.firstElementChild;
-                    activeSlide.classList.remove('active');
-                    nextSlide.classList.add('active');
                 }
-            } else if (event.key === 'ArrowLeft') {
-                const currentElement = focusableElements[currentFocusIndex];
-                if (currentElement.classList.contains('slider')) {
-                    const track = currentElement.querySelector('.slider-track');
-                    const activeSlide = currentElement.querySelector('.slide.active');
-                    const prevSlide = activeSlide.previousElementSibling || track.lastElementChild;
-                    activeSlide.classList.remove('active');
-                    prevSlide.classList.add('active');
-                }
+            } else if (event.key === 'ArrowLeft' && activeElement.classList.contains('slider')) {
+                currentFocusIndex = 0; // Kembali ke menu pertama
+                focusableElements[currentFocusIndex].focus();
             }
         });
 
