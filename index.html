@@ -80,7 +80,7 @@
 </head>
 <body>
     <div class="container" id="carouselContainer">
-        <div class="slider focused" id="slider1">
+        <div class="slider focused" tabindex="0" id="slider1">
             <div class="slider-track" id="sliderTrack1">
                 <div class="slide active"><img src="https://via.placeholder.com/200x120?text=1" alt="Slide 1"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=2" alt="Slide 2"></div>
@@ -90,7 +90,7 @@
             </div>
         </div>
 
-        <div class="slider" id="slider2">
+        <div class="slider" tabindex="-1" id="slider2">
             <div class="slider-track" id="sliderTrack2">
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=A" alt="Slide A"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=B" alt="Slide B"></div>
@@ -100,7 +100,7 @@
             </div>
         </div>
 
-        <div class="slider" id="slider3">
+        <div class="slider" tabindex="-1" id="slider3">
             <div class="slider-track" id="sliderTrack3">
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=I" alt="Slide I"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=II" alt="Slide II"></div>
@@ -112,7 +112,6 @@
     </div>
 
     <script>
-        const container = document.getElementById('carouselContainer');
         const sliders = document.querySelectorAll('.slider');
         let currentSliderIndex = 0;
         let currentIndices = [0, 0, 0];
@@ -140,28 +139,29 @@
             updateSlider(sliderIndex);
         }
 
-        function focusSlider(index) {
-            sliders[currentSliderIndex].classList.remove('focused');
-            updateSlider(currentSliderIndex); // Ensure all slides in the old slider are non-active
+        sliders.forEach((slider, index) => {
+            slider.addEventListener('focus', () => {
+                sliders[currentSliderIndex].classList.remove('focused');
+                sliders[currentSliderIndex].setAttribute('tabindex', '-1');
 
-            currentSliderIndex = index;
-            sliders[currentSliderIndex].classList.add('focused');
-            updateSlider(currentSliderIndex);
-        }
+                currentSliderIndex = index;
+                slider.classList.add('focused');
+                slider.setAttribute('tabindex', '0');
+
+                updateSlider(currentSliderIndex);
+            });
+        });
 
         document.addEventListener('keydown', (event) => {
             if (event.key === 'ArrowRight') {
                 moveSlider(currentSliderIndex, 1);
             } else if (event.key === 'ArrowLeft') {
                 moveSlider(currentSliderIndex, -1);
-            } else if (event.key === 'ArrowDown') {
-                focusSlider((currentSliderIndex + 1) % sliders.length);
-            } else if (event.key === 'ArrowUp') {
-                focusSlider((currentSliderIndex - 1 + sliders.length) % sliders.length);
             }
         });
 
         // Initialize first slider as active
+        sliders[0].focus();
         updateSlider(0);
     </script>
 </body>
