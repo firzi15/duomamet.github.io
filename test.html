@@ -111,10 +111,15 @@
             opacity: 0.5;
             transform: scale(0.8);
         }
+
+        .sidebar.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <h2>Menu</h2>
         <ul id="menuList">
             <li>Popular</li>
@@ -163,16 +168,18 @@
         const container = document.getElementById('carouselContainer');
         const sliders = document.querySelectorAll('.slider');
         const menuItems = document.querySelectorAll('#menuList li');
+        const sidebar = document.getElementById('sidebar');
 
         let currentSliderIndex = 0;
         let currentMenuIndex = 0;
         let currentIndices = [0, 0, 0];
+        let sidebarActive = true;
 
         function updateSlider(sliderIndex) {
             const sliderTrack = sliders[sliderIndex].querySelector('.slider-track');
             const slides = sliders[sliderIndex].querySelectorAll('.slide');
             const currentIndex = currentIndices[sliderIndex];
-            const offset = -currentIndex * (slides[0].offsetWidth + 10); // Update offset calculation for closer slides
+            const offset = -currentIndex * (slides[0].offsetWidth + 10);
 
             sliderTrack.style.transform = `translateX(${offset}px)`;
 
@@ -210,24 +217,33 @@
             });
         }
 
+        function toggleSidebar(active) {
+            sidebarActive = active;
+            sidebar.classList.toggle('disabled', !active);
+        }
+
         document.addEventListener('keydown', (event) => {
-            if (event.key === 'ArrowRight') {
-                moveSlider(currentSliderIndex, 1);
-            } else if (event.key === 'ArrowLeft') {
-                moveSlider(currentSliderIndex, -1);
-            } else if (event.key === 'ArrowDown') {
-                if (document.activeElement.closest('.sidebar')) {
+            if (sidebarActive) {
+                if (event.key === 'ArrowDown') {
                     currentMenuIndex = (currentMenuIndex + 1) % menuItems.length;
                     updateMenuFocus();
-                } else {
-                    focusSlider((currentSliderIndex + 1) % sliders.length);
-                }
-            } else if (event.key === 'ArrowUp') {
-                if (document.activeElement.closest('.sidebar')) {
+                } else if (event.key === 'ArrowUp') {
                     currentMenuIndex = (currentMenuIndex - 1 + menuItems.length) % menuItems.length;
                     updateMenuFocus();
-                } else {
+                } else if (event.key === 'ArrowRight') {
+                    toggleSidebar(false);
+                }
+            } else {
+                if (event.key === 'ArrowRight') {
+                    moveSlider(currentSliderIndex, 1);
+                } else if (event.key === 'ArrowLeft') {
+                    moveSlider(currentSliderIndex, -1);
+                } else if (event.key === 'ArrowDown') {
+                    focusSlider((currentSliderIndex + 1) % sliders.length);
+                } else if (event.key === 'ArrowUp') {
                     focusSlider((currentSliderIndex - 1 + sliders.length) % sliders.length);
+                } else if (event.key === 'ArrowLeft') {
+                    toggleSidebar(true);
                 }
             }
         });
