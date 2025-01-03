@@ -67,11 +67,15 @@
             padding: 10px;
             border-radius: 12px;
         }
+
+        .slider:not(.focused) .slide {
+            transition: none;
+        }
     </style>
 </head>
 <body>
     <div class="container" id="carouselContainer">
-        <div class="slider" id="slider1">
+        <div class="slider focused" id="slider1">
             <div class="slider-track" id="sliderTrack1">
                 <div class="slide active"><img src="https://via.placeholder.com/200x120?text=1" alt="Slide 1"></div>
                 <div class="slide"><img src="https://via.placeholder.com/200x120?text=2" alt="Slide 2"></div>
@@ -135,6 +139,7 @@
             sliders[currentSliderIndex].classList.remove('focused');
             currentSliderIndex = index;
             sliders[currentSliderIndex].classList.add('focused');
+            updateSlider(currentSliderIndex);
         }
 
         document.addEventListener('keydown', (event) => {
@@ -149,11 +154,8 @@
             }
         });
 
-        // Initialize all sliders
-        sliders.forEach((_, index) => updateSlider(index));
-
-        // Set initial focus
-        focusSlider(0);
+        // Initialize first slider as active
+        updateSlider(0);
     </script>
 </body>
 </html>
