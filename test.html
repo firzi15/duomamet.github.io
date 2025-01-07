@@ -236,38 +236,42 @@
         }
 
         function toggleSidebar(active) {
-            sidebarActive = active;
-            sidebar.classList.toggle('disabled', !active);
+    sidebarActive = active;
+    sidebar.classList.toggle('disabled', !active);
+
+    if (active) {
+        // Hapus fokus dari slider aktif
+        sliders[currentSliderIndex].classList.remove('focused');
+        updateSlider(currentSliderIndex);
+    }
+}
+
+      document.addEventListener('keydown', (event) => {
+    if (sidebarActive) {
+        if (event.key === 'ArrowDown') {
+            currentMenuIndex = (currentMenuIndex + 1) % menuItems.length;
+            updateMenuFocus();
+        } else if (event.key === 'ArrowUp') {
+            currentMenuIndex = (currentMenuIndex - 1 + menuItems.length) % menuItems.length;
+            updateMenuFocus();
+        } else if (event.key === 'ArrowRight') {
+            toggleSidebar(false);
+            focusSlider(currentSliderIndex);
         }
-
-        document.addEventListener('keydown', (event) => {
-            if (sidebarActive) {
-                if (event.key === 'ArrowDown') {
-                    currentMenuIndex = (currentMenuIndex + 1) % menuItems.length;
-                    updateMenuFocus();
-                } else if (event.key === 'ArrowUp') {
-                    currentMenuIndex = (currentMenuIndex - 1 + menuItems.length) % menuItems.length;
-                    updateMenuFocus();
-                } else if (event.key === 'ArrowRight') {
-                    toggleSidebar(false);
-                    focusSlider(currentSliderIndex, 1);
-                    
-                }
-            } else {
-                if (event.key === 'ArrowRight') {
-                    moveSlider(currentSliderIndex, 1);
-                } else if (event.key === 'ArrowLeft') {
-                    moveSlider(currentSliderIndex, -1);
-                } else if (event.key === 'ArrowDown') {
-                    focusSlider((currentSliderIndex + 1) % sliders.length);
-                } else if (event.key === 'ArrowUp') {
-                    focusSlider((currentSliderIndex - 1 + sliders.length) % sliders.length);
-                } else if (event.key === 'Escape' || event.key === 'Backspace') {
-                    toggleSidebar(true);
-                }
-            }
-        });
-
+    } else {
+        if (event.key === 'ArrowRight') {
+            moveSlider(currentSliderIndex, 1);
+        } else if (event.key === 'ArrowLeft') {
+            moveSlider(currentSliderIndex, -1);
+        } else if (event.key === 'ArrowDown') {
+            focusSlider((currentSliderIndex + 1) % sliders.length);
+        } else if (event.key === 'ArrowUp') {
+            focusSlider((currentSliderIndex - 1 + sliders.length) % sliders.length);
+        } else if (event.key === 'Escape' || event.key === 'Backspace') {
+            toggleSidebar(true);
+        }
+    }
+});
         // Initialize first slider and menu item as active
         updateSlider(0);
         updateMenuFocus();
