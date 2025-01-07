@@ -26,6 +26,7 @@
             flex-direction: column;
             padding: 20px;
             box-sizing: border-box;
+            align-items: center; /* Memposisikan konten ke tengah secara horizontal */
         }
 
         .sidebar h2 { 
@@ -40,6 +41,9 @@
             list-style-type: none;
             padding: 0;
             margin: 0;
+            margin-left: auto; /* Tambahkan ini */
+            margin-right: auto; /* Tambahkan ini */
+            text-align: left; /* Tetap rata kiri */
         }
 
         .sidebar ul li {
@@ -66,10 +70,10 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
             gap: 20px;
             overflow: hidden;
+            align-items: flex-start; /* Mengatur posisi slider agar lebih dekat ke sidebar */
         }
 
         .slider {
