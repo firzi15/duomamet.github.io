@@ -247,6 +247,10 @@
         // Hapus fokus dari slider aktif
         sliders[currentSliderIndex].classList.remove('focused');
         updateSlider(currentSliderIndex);
+
+        // Fokuskan ke elemen pertama di menu sidebar
+        currentMenuIndex = 0;
+        updateMenuFocus();
     } else {
         // Hapus fokus dari elemen menu di sidebar
         menuItems[currentMenuIndex].classList.remove('focused');
