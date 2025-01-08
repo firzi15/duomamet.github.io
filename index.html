@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARROW TV</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23A9A9A9' d='M96 64h320c17.7 0 32 14.3 32 32V320c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V96c0-17.7 14.3-32 32-32zm0 384h320c17.7 0 32 14.3 32 32s-14.3 32-32 32H96c-17.7 0-32-14.3-32-32s14.3-32 32-32z'/%3E%3C/svg%3E">
+
+    <title>eBox - Nonton Gratis</title>
      
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
         body {
-            font-family: Arial, sans-serif;
+            font-family: Roboto;
             background-color: #000;
             margin: 0;
             display: flex;
@@ -20,13 +22,14 @@
         }
 
         .sidebar {
-            width: 300px;
+            width: 250px;
             background-color: #222;
             display: flex;
             flex-direction: column;
             padding: 20px;
             box-sizing: border-box;
             align-items: center; /* Memposisikan konten ke tengah secara horizontal */
+            margin-right: 20px;
         }
 
         .sidebar h2 { 
@@ -35,6 +38,7 @@
         margin-bottom: 20px;
             font-size: 50px;
             text-align: center;
+            text-transform: none;
         }
 
         .sidebar ul {
@@ -138,7 +142,7 @@
 </head>
 <body>
     <div class="sidebar" id="sidebar">
-        <h2>Arrow TV</h2>
+        <h2>eBox</h2>
         <ul id="menuList">
     <li><span class="fas fa-tv"></span> Local</li>
     <li><span class="fas fa-film"></span> Entertainment</li>
@@ -236,38 +240,42 @@
         }
 
         function toggleSidebar(active) {
-            sidebarActive = active;
-            sidebar.classList.toggle('disabled', !active);
+    sidebarActive = active;
+    sidebar.classList.toggle('disabled', !active);
+
+    if (active) {
+        // Hapus fokus dari slider aktif
+        sliders[currentSliderIndex].classList.remove('focused');
+        updateSlider(currentSliderIndex);
+    }
+}
+
+      document.addEventListener('keydown', (event) => {
+    if (sidebarActive) {
+        if (event.key === 'ArrowDown') {
+            currentMenuIndex = (currentMenuIndex + 1) % menuItems.length;
+            updateMenuFocus();
+        } else if (event.key === 'ArrowUp') {
+            currentMenuIndex = (currentMenuIndex - 1 + menuItems.length) % menuItems.length;
+            updateMenuFocus();
+        } else if (event.key === 'ArrowRight') {
+            toggleSidebar(false);
+            focusSlider(currentSliderIndex);
         }
-
-        document.addEventListener('keydown', (event) => {
-            if (sidebarActive) {
-                if (event.key === 'ArrowDown') {
-                    currentMenuIndex = (currentMenuIndex + 1) % menuItems.length;
-                    updateMenuFocus();
-                } else if (event.key === 'ArrowUp') {
-                    currentMenuIndex = (currentMenuIndex - 1 + menuItems.length) % menuItems.length;
-                    updateMenuFocus();
-                } else if (event.key === 'ArrowRight') {
-                    toggleSidebar(false);
-                    focusSlider(currentSliderIndex, 1);
-                    
-                }
-            } else {
-                if (event.key === 'ArrowRight') {
-                    moveSlider(currentSliderIndex, 1);
-                } else if (event.key === 'ArrowLeft') {
-                    moveSlider(currentSliderIndex, -1);
-                } else if (event.key === 'ArrowDown') {
-                    focusSlider((currentSliderIndex + 1) % sliders.length);
-                } else if (event.key === 'ArrowUp') {
-                    focusSlider((currentSliderIndex - 1 + sliders.length) % sliders.length);
-                } else if (event.key === 'Escape' || event.key === 'Backspace') {
-                    toggleSidebar(true);
-                }
-            }
-        });
-
+    } else {
+        if (event.key === 'ArrowRight') {
+            moveSlider(currentSliderIndex, 1);
+        } else if (event.key === 'ArrowLeft') {
+            moveSlider(currentSliderIndex, -1);
+        } else if (event.key === 'ArrowDown') {
+            focusSlider((currentSliderIndex + 1) % sliders.length);
+        } else if (event.key === 'ArrowUp') {
+            focusSlider((currentSliderIndex - 1 + sliders.length) % sliders.length);
+        } else if (event.key === 'Escape' || event.key === 'Backspace') {
+            toggleSidebar(true);
+        }
+    }
+});
         // Initialize first slider and menu item as active
         updateSlider(0);
         updateMenuFocus();
