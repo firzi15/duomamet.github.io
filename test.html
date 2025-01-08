@@ -247,8 +247,12 @@
         // Hapus fokus dari slider aktif
         sliders[currentSliderIndex].classList.remove('focused');
         updateSlider(currentSliderIndex);
+    } else {
+        // Hapus fokus dari elemen menu di sidebar
+        menuItems[currentMenuIndex].classList.remove('focused');
     }
 }
+
 
       document.addEventListener('keydown', (event) => {
     if (sidebarActive) {
