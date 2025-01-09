@@ -148,7 +148,7 @@
     display: inline-block;
 }
 
-.sidebar.disabled ul li{
+.sidebar.disabled ul li::after {
     content: ''; /* Hapus teks */
     visibility: hidden; /* Sembunyikan teks di li */
     height: 0; /* Tidak memengaruhi tata letak */
@@ -159,7 +159,6 @@
 </head>
 <body>
     <div class="sidebar" id="sidebar">
-        <h2>eBox</h2>
         <ul id="menuList">
     <li><span class="fas fa-tv"></span> Local</li>
     <li><span class="fas fa-film"></span> Entertainment</li>
@@ -265,12 +264,28 @@
         sliders[currentSliderIndex].classList.remove('focused');
         updateSlider(currentSliderIndex);
 
+         menuItems.forEach((item) => {
+            const textNode = item.querySelector('span + text');
+            if (textNode) textNode.textContent = textNode.dataset.text || '';
+              });
+        sliders[currentSliderIndex].classList.remove('focused');
+        updateSlider(currentSliderIndex);
+        currentMenuIndex = 0;
+        updateMenuFocus();
+
         // Fokuskan ke elemen pertama di menu sidebar
         currentMenuIndex = 0;
         updateMenuFocus();
     } else {
         // Hapus fokus dari elemen menu di sidebar
         menuItems[currentMenuIndex].classList.remove('focused');
+         menuItems.forEach((item) => {
+            const textNode = item.querySelector('span + text');
+            if (textNode) {
+                textNode.dataset.text = textNode.textContent;
+                textNode.textContent = '';
+            }
+        });
     }
 }
 
