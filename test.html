@@ -136,26 +136,24 @@
         }
 
         .sidebar.disabled {
-            opacity: 0.5;
+            opacity: 1;
             pointer-events: none;
         }
-            .sidebar.minimized {
-    width: 70px; /* Lebar sidebar yang diperkecil */
-    overflow: hidden;
-    transition: width 0.3s ease-in-out; /* Transisi halus */
+
+        .sidebar.disabled ul li {
+    text-align: center; /* Ikon tetap terlihat di tengah */
 }
 
-.sidebar.minimized h2,
-.sidebar.minimized ul li {
-    display: none; /* Sembunyikan teks di dalam sidebar */
+.sidebar.disabled ul li span {
+    display: block; /* Pastikan ikon tetap tampil */
+    font-size: 24px; /* Perbesar ikon untuk menonjol */
+    margin-bottom: 10px;
 }
 
-.sidebar.minimized ul li span {
-    font-size: 24px; /* Sesuaikan ukuran ikon */
-    display: block;
-    text-align: center;
+.sidebar.disabled ul li::after {
+    content: ''; /* Hapus teks */
 }
-        }
+            
     </style>
 </head>
 <body>
@@ -274,12 +272,6 @@
         menuItems[currentMenuIndex].classList.remove('focused');
     }
 }
-
-        sidebar.addEventListener('contextmenu', (event) => {
-    event.preventDefault(); // Mencegah menu konteks default
-    sidebar.classList.toggle('minimized');
-});
-
 
       document.addEventListener('keydown', (event) => {
     if (sidebarActive) {
