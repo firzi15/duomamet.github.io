@@ -219,7 +219,7 @@
             const currentIndex = currentIndices[sliderIndex];
             const offset = -currentIndex * (slides[0].offsetWidth + 10);
 
-            sliderTrack.style.transform = translateX(${offset}px);
+            sliderTrack.style.transform = `translateX(${offset}px)`;
 
             slides.forEach((slide, index) => {
                 if (index === currentIndex && sliders[sliderIndex].classList.contains('focused')) {
