@@ -74,9 +74,8 @@
     border: 2px solid red; /* Border merah */
     padding: 4px 8px; /* Penyesuaian padding untuk memperhatikan border */
 }
-        sidebar.disabled ul li div {
-    display: none; /* Sembunyikan teks saat sidebar dinonaktifkan */
-    font-size: 0px;
+        .sidebar.disabled ul li div {
+    display: none; /* Menyembunyikan teks */
 }
 
         .main {
@@ -152,13 +151,15 @@
         <h2>eBox</h2>
         <ul id="menuList">
    <ul id="menuList">
-    <li><span class="fas fa-tv"></span> <div id="local">Local</div></li>
-    <li><span class="fas fa-film"></span> <div id="entertainment">Entertainment</div></li>
-    <li><span class="fas fa-football-ball"></span> <div id="sports">Sports</div></li>
-    <li><span class="fas fa-book"></span> <div id="knowledge">Knowledge</div></li>
-    <li><span class="fas fa-video"></span> <div id="movies">Movies</div></li>
-    <li><span class="fas fa-info-circle"></span> <div id="about">About</div></li>
-    <li><span class="fas fa-power-off"></span> <div id="exit">Exit</div></li>
+    <ul id="menuList">
+    <li><span class="fas fa-tv"></span> <div>Local</div></li>
+    <li><span class="fas fa-film"></span> <div>Entertainment</div></li>
+    <li><span class="fas fa-football-ball"></span> <div>Sports</div></li>
+    <li><span class="fas fa-book"></span> <div>Knowledge</div></li>
+    <li><span class="fas fa-video"></span> <div>Movies</div></li>
+    <li><span class="fas fa-info-circle"></span> <div>About</div></li>
+    <li><span class="fas fa-power-off"></span> <div>Exit</div></li>
+</ul>
 </ul>
 </ul>
     </div>
