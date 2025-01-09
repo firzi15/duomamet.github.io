@@ -32,6 +32,12 @@
             margin-right: 20px;
         }
 
+          .sidebar.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            width: 80px;
+        }
+
         .sidebar h2 { 
             font-family: 'Bebas Neue', Arial, sans-serif;
         color: green;
@@ -54,6 +60,9 @@
             padding: 5px 10px;
             border-radius: 5px;
             font-size: 20px;
+            display: flex;
+            display: inline-block; /* Membuat elemen tampil sejajar */
+    vertical-align: middle; /* Mengatur posisi vertikal elemen agar sejajar */
         }
 
         .sidebar ul li.focused {
@@ -67,9 +76,19 @@
     border: 2px solid red; /* Border merah */
     padding: 4px 8px; /* Penyesuaian padding untuk memperhatikan border */
 }
-        /* Add margin-top specifically to the Exit button */
-.sidebar ul li:last-child {
-    margin-top: 30px; /* Add margin-top to the last item */
+
+    .sidebar ul li:last-child {
+    margin-top: 40px;
+}
+       /* Menyembunyikan teks saat sidebar dinonaktifkan */
+.sidebar.disabled ul li .text {
+    display: none;
+}
+
+
+/* Mengatur ukuran ikon lebih besar saat sidebar dinonaktifkan */
+.sidebar.disabled ul li span {
+    font-size: 24px;
 }
 
         .main {
@@ -137,25 +156,22 @@
             transform: scale(0.8);
         }
 
-        .sidebar.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-            width: 80px;
-        }
+      
     </style>
 </head>
 <body>
     <div class="sidebar" id="sidebar">
         <h2>eBox</h2>
         <ul id="menuList">
-    <li><span class="fas fa-tv"></span> Local</li>
-    <li><span class="fas fa-film"></span> Entertainment</li>
-    <li><span class="fas fa-football-ball"></span> Sports</li>
-    <li><span class="fas fa-book"></span> Knowledge</li>
-    <li><span class="fas fa-video"></span> Movies</li>
-    <li><span class="fas fa-info-circle"></span> About</li>
-    <li><span class="fas fa-power-off"></span> Exit</li>
+    <li><span class="fas fa-tv"></span><span class="text">Local</span></li>
+    <li><span class="fas fa-film"></span><span class="text">Entertainment</span></li>
+    <li><span class="fas fa-football-ball"></span><span class="text">Sports</span></li>
+    <li><span class="fas fa-book"></span><span class="text">Knowledge</span></li>
+    <li><span class="fas fa-video"></span><span class="text">Movies</span></li>
+    <li><span class="fas fa-info-circle"></span><span class="text">About</span></li>
+    <li><span class="fas fa-power-off"></span><span class="text">Exit</span></li>
 </ul>
+
     </div>
 
     <div class="main" id="carouselContainer">
@@ -207,7 +223,7 @@
             const currentIndex = currentIndices[sliderIndex];
             const offset = -currentIndex * (slides[0].offsetWidth + 10);
 
-            sliderTrack.style.transform = `translateX(${offset}px)`;
+            sliderTrack.style.transform = translateX(${offset}px);
 
             slides.forEach((slide, index) => {
                 if (index === currentIndex && sliders[sliderIndex].classList.contains('focused')) {
