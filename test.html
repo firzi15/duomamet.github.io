@@ -61,6 +61,8 @@
             border-radius: 5px;
             font-size: 20px;
             display: flex;
+            display: inline-block; /* Membuat elemen tampil sejajar */
+    vertical-align: middle; /* Mengatur posisi vertikal elemen agar sejajar */
         }
 
         .sidebar ul li.focused {
@@ -79,10 +81,7 @@
     display: none;
 }
 
-.sidebar ul li span {
-    margin: 0;
-    padding: 0;
-}
+
 /* Mengatur ukuran ikon lebih besar saat sidebar dinonaktifkan */
 .sidebar.disabled ul li span {
     font-size: 24px;
