@@ -148,7 +148,7 @@
     display: inline-block;
 }
 
-.sidebar.disabled ul li::after {
+.sidebar.disabled ul li {
     content: ''; /* Hapus teks */
     visibility: hidden; /* Sembunyikan teks di li */
     height: 0; /* Tidak memengaruhi tata letak */
@@ -160,6 +160,7 @@
 <body>
     <div class="sidebar" id="sidebar">
         <ul id="menuList">
+            <h2>eBox</h2>
     <li><span class="fas fa-tv"></span> Local</li>
     <li><span class="fas fa-film"></span> Entertainment</li>
     <li><span class="fas fa-football-ball"></span> Sports</li>
