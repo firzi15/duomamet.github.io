@@ -28,8 +28,15 @@
             flex-direction: column;
             padding: 20px;
             box-sizing: border-box;
-            align-items: center; /* Memposisikan konten ke tengah secara horizontal */
+            align-items: stretch;
             margin-right: 20px;
+            
+        }
+
+          .sidebar.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            width: 80px;
         }
 
         .sidebar h2 { 
@@ -41,7 +48,7 @@
             text-transform: none;
         }
 
-        .sidebar ul {
+       .sidebar ul {
             list-style-type: none;
             padding: 0;
             margin: 0;
@@ -63,9 +70,29 @@
         }
 
         .sidebar ul li:last-child.focused {
-    background-color: red; /* Background merah */
-    border: 2px solid red; /* Border merah */
-    padding: 4px 8px; /* Penyesuaian padding untuk memperhatikan border */
+        background-color: red; /* Background merah */
+            border: 2px solid red; /* Border merah */
+            padding: 4px 8px; /* Penyesuaian padding untuk memperhatikan border */
+    
+}
+        .sidebar ul li:last-child {
+            margin-top: 40px;
+        }
+
+        .text{
+            margin-left: 5px;
+        }
+
+    
+       /* Menyembunyikan teks saat sidebar dinonaktifkan */
+.sidebar.disabled ul li .text {
+    display: none;
+}
+
+
+/* Mengatur ukuran ikon lebih besar saat sidebar dinonaktifkan */
+.sidebar.disabled ul li span {
+    font-size: 24px;
 }
 
         .main {
@@ -91,8 +118,8 @@
         }
 
         .slide {
-            min-width: 200px;
-            height: 120px;
+            width: 240px;
+            height: 135px;
             margin: 0 5px;
             background-color: #444;
             color: white;
@@ -133,25 +160,22 @@
             transform: scale(0.8);
         }
 
-        .sidebar.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-            width: 80px;
-        }
+      
     </style>
 </head>
 <body>
     <div class="sidebar" id="sidebar">
         <h2>eBox</h2>
         <ul id="menuList">
-    <li><span class="fas fa-tv"></span> Local</li>
-    <li><span class="fas fa-film"></span> Entertainment</li>
-    <li><span class="fas fa-football-ball"></span> Sports</li>
-    <li><span class="fas fa-book"></span> Knowledge</li>
-    <li><span class="fas fa-video"></span> Movies</li>
-    <li><span class="fas fa-info-circle"></span> About</li>
-    <li><span class="fas fa-power-off"></span> Exit</li>
+    <li><span class="fas fa-tv"></span><span class="text">Local</span></li>
+    <li><span class="fas fa-film"></span><span class="text">Entertainment</span></li>
+    <li><span class="fas fa-football-ball"></span><span class="text">Sports</span></li>
+    <li><span class="fas fa-book"></span><span class="text">Knowledge</span></li>
+    <li><span class="fas fa-video"></span><span class="text">Movies</span></li>
+    <li><span class="fas fa-info-circle"></span><span class="text">About</span></li>
+    <li><span class="fas fa-power-off"></span><span class="text">Exit</span></li>
 </ul>
+
     </div>
 
     <div class="main" id="carouselContainer">
