@@ -145,11 +145,14 @@
 }
 
 .sidebar.disabled ul li span {
-    display: block; /* Pastikan ikon tetap tampil */
+    display: inline-block;
 }
 
 .sidebar.disabled ul li::after {
     content: ''; /* Hapus teks */
+    visibility: hidden; /* Sembunyikan teks di li */
+    height: 0; /* Tidak memengaruhi tata letak */
+    width: 0;
 }
             
     </style>
