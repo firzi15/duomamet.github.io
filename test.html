@@ -53,6 +53,7 @@
             padding: 0;
             margin: 0;
             text-align: left; /* Tetap rata kiri */
+            flex-grow: 1; /* Memastikan menu item mengisi ruang secara vertikal */
         }
 
         .sidebar ul li {
@@ -64,6 +65,8 @@
             display: flex;
             display: inline-block; /* Membuat elemen tampil sejajar */
     vertical-align: middle; /* Mengatur posisi vertikal elemen agar sejajar */
+            flex-direction: column; /* Memastikan konten dalam li tetap sejajar */
+    align-items: center; /* Pastikan teks dan ikon ter-align dengan baik */
         }
 
         .sidebar ul li.focused {
