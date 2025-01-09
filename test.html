@@ -32,6 +32,12 @@
             margin-right: 20px;
         }
 
+          .sidebar.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            width: 80px;
+        }
+
         .sidebar h2 { 
             font-family: 'Bebas Neue', Arial, sans-serif;
         color: green;
@@ -45,7 +51,6 @@
             list-style-type: none;
             padding: 0;
             margin: 0;
-           
             text-align: left; /* Tetap rata kiri */
         }
 
@@ -55,6 +60,7 @@
             padding: 5px 10px;
             border-radius: 5px;
             font-size: 20px;
+            
         }
 
         .sidebar ul li.focused {
@@ -67,6 +73,9 @@
     background-color: red; /* Background merah */
     border: 2px solid red; /* Border merah */
     padding: 4px 8px; /* Penyesuaian padding untuk memperhatikan border */
+}
+        sidebar.disabled ul li div {
+    display: none; /* Sembunyikan teks saat sidebar dinonaktifkan */
 }
 
         .main {
@@ -134,40 +143,22 @@
             transform: scale(0.8);
         }
 
-        .sidebar.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-            width: 80px;
-        }
-
-        .sidebar.disabled ul li {
-    text-align: center; /* Ikon tetap terlihat di tengah */
-}
-
-.sidebar.disabled ul li span {
-    display: inline-block;
-}
-
-.sidebar.disabled ul li {
-    content: ''; /* Hapus teks */
-    visibility: hidden; /* Sembunyikan teks di li */
-    height: 0; /* Tidak memengaruhi tata letak */
-    width: 0;
-}
-            
+      
     </style>
 </head>
 <body>
     <div class="sidebar" id="sidebar">
+        <h2>eBox</h2>
         <ul id="menuList">
-            <h2>eBox</h2>
-    <li><span class="fas fa-tv"></span> Local</li>
-    <li><span class="fas fa-film"></span> Entertainment</li>
-    <li><span class="fas fa-football-ball"></span> Sports</li>
-    <li><span class="fas fa-book"></span> Knowledge</li>
-    <li><span class="fas fa-video"></span> Movies</li>
-    <li><span class="fas fa-info-circle"></span> About</li>
-    <li><span class="fas fa-power-off"></span> Exit</li>
+   <ul id="menuList">
+    <li><span class="fas fa-tv"></span> <div id="local">Local</div></li>
+    <li><span class="fas fa-film"></span> <div id="entertainment">Entertainment</div></li>
+    <li><span class="fas fa-football-ball"></span> <div id="sports">Sports</div></li>
+    <li><span class="fas fa-book"></span> <div id="knowledge">Knowledge</div></li>
+    <li><span class="fas fa-video"></span> <div id="movies">Movies</div></li>
+    <li><span class="fas fa-info-circle"></span> <div id="about">About</div></li>
+    <li><span class="fas fa-power-off"></span> <div id="exit">Exit</div></li>
+</ul>
 </ul>
     </div>
 
@@ -265,30 +256,15 @@
         sliders[currentSliderIndex].classList.remove('focused');
         updateSlider(currentSliderIndex);
 
-         menuItems.forEach((item) => {
-            const textNode = item.querySelector('span + text');
-            if (textNode) textNode.textContent = textNode.dataset.text || '';
-              });
-        sliders[currentSliderIndex].classList.remove('focused');
-        updateSlider(currentSliderIndex);
-        currentMenuIndex = 0;
-        updateMenuFocus();
-
         // Fokuskan ke elemen pertama di menu sidebar
         currentMenuIndex = 0;
         updateMenuFocus();
     } else {
         // Hapus fokus dari elemen menu di sidebar
         menuItems[currentMenuIndex].classList.remove('focused');
-         menuItems.forEach((item) => {
-            const textNode = item.querySelector('span + text');
-            if (textNode) {
-                textNode.dataset.text = textNode.textContent;
-                textNode.textContent = '';
-            }
-        });
     }
 }
+
 
       document.addEventListener('keydown', (event) => {
     if (sidebarActive) {
@@ -313,7 +289,6 @@
             focusSlider((currentSliderIndex - 1 + sliders.length) % sliders.length);
         } else if (event.key === 'Escape' || event.key === 'Backspace') {
             toggleSidebar(true);
-           
         }
     }
 });
@@ -321,11 +296,7 @@
         updateSlider(0);
         updateMenuFocus();
 
-       document.addEventListener('keydown', (event) => {
-    if ((event.key === 'Escape' || event.key === 'Backspace') && sidebar.classList.contains('minimized')) {
-        sidebar.classList.remove('minimized');
-    }
-});
+       
     </script>
 </body>
 </html>
