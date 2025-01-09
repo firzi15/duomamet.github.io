@@ -312,7 +312,11 @@
         updateSlider(0);
         updateMenuFocus();
 
-       
+       document.addEventListener('keydown', (event) => {
+    if ((event.key === 'Escape' || event.key === 'Backspace') && sidebar.classList.contains('minimized')) {
+        sidebar.classList.remove('minimized');
+    }
+});
     </script>
 </body>
 </html>
