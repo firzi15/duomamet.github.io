@@ -74,12 +74,14 @@
     border: 2px solid red; /* Border merah */
     padding: 4px 8px; /* Penyesuaian padding untuk memperhatikan border */
 }
-        .sidebar.disabled ul li div {
-    display: none; /* Menyembunyikan teks */
+       /* Menyembunyikan teks saat sidebar dinonaktifkan */
+.sidebar.disabled ul li .text {
+    display: none;
 }
 
-    sidebar.disabled ul li span {
-    font-size: 24px; /* Ukuran ikon lebih besar agar lebih jelas terlihat */
+/* Mengatur ukuran ikon lebih besar saat sidebar dinonaktifkan */
+.sidebar.disabled ul li span {
+    font-size: 24px;
 }
 
         .main {
@@ -154,18 +156,15 @@
     <div class="sidebar" id="sidebar">
         <h2>eBox</h2>
         <ul id="menuList">
-   <ul id="menuList">
-    <ul id="menuList">
-    <li><span class="fas fa-tv"></span> <div>Local</div></li>
-    <li><span class="fas fa-film"></span> <div>Entertainment</div></li>
-    <li><span class="fas fa-football-ball"></span> <div>Sports</div></li>
-    <li><span class="fas fa-book"></span> <div>Knowledge</div></li>
-    <li><span class="fas fa-video"></span> <div>Movies</div></li>
-    <li><span class="fas fa-info-circle"></span> <div>About</div></li>
-    <li><span class="fas fa-power-off"></span> <div>Exit</div></li>
+    <li><span class="fas fa-tv"></span><span class="text">Local</span></li>
+    <li><span class="fas fa-film"></span><span class="text">Entertainment</span></li>
+    <li><span class="fas fa-football-ball"></span><span class="text">Sports</span></li>
+    <li><span class="fas fa-book"></span><span class="text">Knowledge</span></li>
+    <li><span class="fas fa-video"></span><span class="text">Movies</span></li>
+    <li><span class="fas fa-info-circle"></span><span class="text">About</span></li>
+    <li><span class="fas fa-power-off"></span><span class="text">Exit</span></li>
 </ul>
-</ul>
-</ul>
+
     </div>
 
     <div class="main" id="carouselContainer">
