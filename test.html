@@ -138,6 +138,23 @@
         .sidebar.disabled {
             opacity: 0.5;
             pointer-events: none;
+
+            .sidebar.minimized {
+    width: 70px; /* Lebar sidebar yang diperkecil */
+    overflow: hidden;
+    transition: width 0.3s ease-in-out; /* Transisi halus */
+}
+
+.sidebar.minimized h2,
+.sidebar.minimized ul li {
+    display: none; /* Sembunyikan teks di dalam sidebar */
+}
+
+.sidebar.minimized ul li span {
+    font-size: 24px; /* Sesuaikan ukuran ikon */
+    display: block;
+    text-align: center;
+}
         }
     </style>
 </head>
@@ -258,6 +275,11 @@
     }
 }
 
+        sidebar.addEventListener('contextmenu', (event) => {
+    event.preventDefault(); // Mencegah menu konteks default
+    sidebar.classList.toggle('minimized');
+});
+
 
       document.addEventListener('keydown', (event) => {
     if (sidebarActive) {
@@ -280,8 +302,9 @@
             focusSlider((currentSliderIndex + 1) % sliders.length);
         } else if (event.key === 'ArrowUp') {
             focusSlider((currentSliderIndex - 1 + sliders.length) % sliders.length);
-        } else if (event.key === 'Escape' || event.key === 'Backspace') {
+        } else if (event.key === 'Escape' || event.key === 'Backspace')  && sidebar.classList.contains('minimized')){
             toggleSidebar(true);
+            sidebar.classList.remove('minimized');
         }
     }
 });
