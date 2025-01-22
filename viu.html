@@ -32,61 +32,12 @@
             margin-right: 20px;
         }
 
-        .sidebar.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-            width: 80px;
-        }
-
         .sidebar h2 { 
             color: green;
             margin-bottom: 30px;
             font-size: 40px;
             text-align: center;
             text-transform: none;
-        }
-
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            text-align: left;
-        }
-
-        .sidebar ul li {
-            margin-bottom: 15px;
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 20px;
-        }
-
-        .sidebar ul li.focused {
-            background-color: #3d3d3d;
-            border: 2px solid #3d3d3d;
-            padding: 4px 8px;
-        }
-
-        .sidebar ul li:last-child.focused {
-            background-color: red;
-            border: 2px solid red;
-            padding: 4px 8px;
-        }
-
-        .sidebar ul li:last-child {
-            margin-top: 40px;
-        }
-
-        .text{
-            margin-left: 5px;
-        }
-
-        .sidebar.disabled ul li .text {
-            display: none;
-        }
-
-        .sidebar.disabled ul li span {
-            font-size: 24px;
         }
 
         .main {
@@ -97,6 +48,21 @@
             gap: 20px;
             overflow: hidden;
             align-items: flex-start;
+        }
+
+        /* Badge Styles */
+        .badge {
+            font-size: 30px;
+            background-color: #444;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .slider {
@@ -124,7 +90,6 @@
             border-radius: 10px;
             opacity: 0.5;
             transform: scale(0.8);
-            position: relative;
         }
 
         .slide.active {
@@ -137,42 +102,7 @@
             width: 100%;
             height: 100%;
             border-radius: 10px;
-            object-fit: cover; /* This ensures the image fills the box */
-        }
-
-        .slider.focused {
-            padding: 10px;
-            border-radius: 12px;
-        }
-
-        .slider:not(.focused) .slide {
-            transition: none;
-        }
-
-        .slider:not(.focused) .slide.active {
-            opacity: 0.5;
-            transform: scale(0.8);
-        }
-
-        /* Badge styling */
-        .badge {
-            position: absolute;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 300px;
-            height: 170px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            opacity: 0.8;
-        }
-
-        .badge img {
-            width: 100%;
-            height: 100%;
             object-fit: cover;
-            border-radius: 10px;
         }
 
     </style>
@@ -192,26 +122,13 @@
     </div>
 
     <div class="main" id="carouselContainer">
+        <div class="badge" id="badgeText">Source: 1</div> <!-- Badge showing the source of the focused slide -->
         <div class="slider" id="slider1">
             <div class="slider-track" id="sliderTrack1">
-                <div class="slide active">
-                    <img src="https://via.placeholder.com/200x120?text=1" alt="Slide 1">
-                    <div class="badge">
-                        <img src="https://via.placeholder.com/200x120?text=1" alt="Badge">
-                    </div>
-                </div>
-                <div class="slide">
-                    <img src="https://via.placeholder.com/200x120?text=2" alt="Slide 2">
-                    <div class="badge">
-                        <img src="https://via.placeholder.com/200x120?text=2" alt="Badge">
-                    </div>
-                </div>
-                <div class="slide">
-                    <img src="https://via.placeholder.com/200x120?text=3" alt="Slide 3">
-                    <div class="badge">
-                        <img src="https://via.placeholder.com/200x120?text=3" alt="Badge">
-                    </div>
-                </div>
+                <div class="slide active"><img src="https://via.placeholder.com/200x120?text=1" alt="Slide 1"></div>
+                <div class="slide"><img src="https://via.placeholder.com/200x120?text=2" alt="Slide 2"></div>
+                <div class="slide"><img src="https://via.placeholder.com/200x120?text=3" alt="Slide 3"></div>
+                <div class="slide"><img src="https://via.placeholder.com/200x120?text=4" alt="Slide 4"></div>
                 <!-- Add more slides as needed -->
             </div>
         </div>
@@ -220,6 +137,7 @@
     <script>
         const container = document.getElementById('carouselContainer');
         const sliders = document.querySelectorAll('.slider');
+        const badgeText = document.getElementById('badgeText');
         const menuItems = document.querySelectorAll('#menuList li');
         const sidebar = document.getElementById('sidebar');
 
@@ -243,6 +161,9 @@
                     slide.classList.remove('active');
                 }
             });
+
+            // Update the badge text with the source of the focused slide
+            badgeText.innerHTML = `Source: ${currentIndex + 1}`; // Shows the current slide number as source
         }
 
         function moveSlider(sliderIndex, direction) {
@@ -311,7 +232,6 @@
             }
         });
 
-        // Initialize first slider and menu item as active
         updateSlider(0);
         updateMenuFocus();
     </script>
