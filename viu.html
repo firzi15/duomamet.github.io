@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23A9A9A9' d='M96 64h320c17.7 0 32 14.3 32 32V320c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V96c0-17.7 14.3-32 32-32zm0 384h320c17.7 0 32 14.3 32 32s-14.3 32-32 32H96c-17.7 0-32-14.3-32-32s14.3-32 32-32z'/%3E%3C/svg%3E">
+
     <title>eBox - Nonton Gratis</title>
+     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <style>
@@ -97,34 +99,6 @@
             align-items: flex-start;
         }
 
-        .badge {
-            width: 240px;
-            height: 135px;
-            margin-bottom: 20px;
-            background-color: #444;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 16px;
-            border-radius: 10px;
-            opacity: 0.5;
-            transform: scale(0.8);
-            transition: opacity 0.3s, transform 0.3s;
-        }
-
-        .badge img {
-            width: 100%;
-            height: 100%;
-            border-radius: 10px;
-            object-fit: cover;
-        }
-
-        .badge.active {
-            opacity: 1;
-            transform: scale(1);
-        }
-
         .slider {
             display: flex;
             overflow: visible;
@@ -150,11 +124,20 @@
             border-radius: 10px;
             opacity: 0.5;
             transform: scale(0.8);
+            position: relative;
         }
 
         .slide.active {
             opacity: 1;
             transform: scale(1);
+            transition: opacity 0.3s, transform 0.3s, border 0.3s;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            object-fit: cover; /* This ensures the image fills the box */
         }
 
         .slider.focused {
@@ -170,6 +153,28 @@
             opacity: 0.5;
             transform: scale(0.8);
         }
+
+        /* Badge styling */
+        .badge {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 170px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            opacity: 0.8;
+        }
+
+        .badge img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -187,30 +192,27 @@
     </div>
 
     <div class="main" id="carouselContainer">
-        <div class="badge" id="badge"></div>
-
         <div class="slider" id="slider1">
             <div class="slider-track" id="sliderTrack1">
-                <div class="slide active"><img src="https://via.placeholder.com/200x120?text=1" alt="Slide 1"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=2" alt="Slide 2"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=3" alt="Slide 3"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=4" alt="Slide 4"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=5" alt="Slide 5"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=6" alt="Slide 6"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=7" alt="Slide 7"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=8" alt="Slide 8"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=9" alt="Slide 9"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=10" alt="Slide 10"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=11" alt="Slide 11"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=12" alt="Slide 12"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=13" alt="Slide 13"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=14" alt="Slide 14"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=15" alt="Slide 15"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=16" alt="Slide 16"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=17" alt="Slide 17"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=18" alt="Slide 18"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=19" alt="Slide 19"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=20" alt="Slide 20"></div>
+                <div class="slide active">
+                    <img src="https://via.placeholder.com/200x120?text=1" alt="Slide 1">
+                    <div class="badge">
+                        <img src="https://via.placeholder.com/200x120?text=1" alt="Badge">
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="https://via.placeholder.com/200x120?text=2" alt="Slide 2">
+                    <div class="badge">
+                        <img src="https://via.placeholder.com/200x120?text=2" alt="Badge">
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="https://via.placeholder.com/200x120?text=3" alt="Slide 3">
+                    <div class="badge">
+                        <img src="https://via.placeholder.com/200x120?text=3" alt="Badge">
+                    </div>
+                </div>
+                <!-- Add more slides as needed -->
             </div>
         </div>
     </div>
@@ -220,8 +222,6 @@
         const sliders = document.querySelectorAll('.slider');
         const menuItems = document.querySelectorAll('#menuList li');
         const sidebar = document.getElementById('sidebar');
-        const badge = document.getElementById('badge');
-        const badgeImg = badge.querySelector('img');
 
         let currentSliderIndex = 0;
         let currentMenuIndex = 0;
@@ -239,20 +239,10 @@
             slides.forEach((slide, index) => {
                 if (index === currentIndex && sliders[sliderIndex].classList.contains('focused')) {
                     slide.classList.add('active');
-                    updateBadge(slide);  // Update badge with the active slide image
                 } else {
                     slide.classList.remove('active');
                 }
             });
-        }
-
-        function updateBadge(slide) {
-            // Update badge image to match active slide
-            const img = slide.querySelector('img');
-            if (img) {
-                badge.innerHTML = `<img src="${img.src}" alt="Badge Image">`; 
-                badge.classList.add('active');
-            }
         }
 
         function moveSlider(sliderIndex, direction) {
@@ -287,7 +277,6 @@
             if (active) {
                 sliders[currentSliderIndex].classList.remove('focused');
                 updateSlider(currentSliderIndex);
-
                 currentMenuIndex = 0;
                 updateMenuFocus();
             } else {
@@ -322,6 +311,7 @@
             }
         });
 
+        // Initialize first slider and menu item as active
         updateSlider(0);
         updateMenuFocus();
     </script>
