@@ -47,9 +47,7 @@
             text-transform: none;
         }
 
-        
-
-       .sidebar ul {
+        .sidebar ul {
             list-style-type: none;
             padding: 0;
             margin: 0;
@@ -66,16 +64,16 @@
 
         .sidebar ul li.focused {
             background-color: #3d3d3d; /* Background abu-abu gelap */
-    border: 2px solid #3d3d3d; /* Border abu-abu gelap */
-    padding: 4px 8px; /* Penyesuaian padding untuk memperhatikan border */
+            border: 2px solid #3d3d3d; /* Border abu-abu gelap */
+            padding: 4px 8px; /* Penyesuaian padding untuk memperhatikan border */
         }
 
         .sidebar ul li:last-child.focused {
-        background-color: red; /* Background merah */
+            background-color: red; /* Background merah */
             border: 2px solid red; /* Border merah */
             padding: 4px 8px; /* Penyesuaian padding untuk memperhatikan border */
-    
-}
+        }
+
         .sidebar ul li:last-child {
             margin-top: 40px;
         }
@@ -84,17 +82,15 @@
             margin-left: 5px;
         }
 
-    
-       /* Menyembunyikan teks saat sidebar dinonaktifkan */
-.sidebar.disabled ul li .text {
-    display: none;
-}
+        /* Menyembunyikan teks saat sidebar dinonaktifkan */
+        .sidebar.disabled ul li .text {
+            display: none;
+        }
 
-
-/* Mengatur ukuran ikon lebih besar saat sidebar dinonaktifkan */
-.sidebar.disabled ul li span {
-    font-size: 24px;
-}
+        /* Mengatur ukuran ikon lebih besar saat sidebar dinonaktifkan */
+        .sidebar.disabled ul li span {
+            font-size: 24px;
+        }
 
         .main {
             flex: 1;
@@ -139,7 +135,6 @@
             transition: opacity 0.3s, transform 0.3s, border 0.3s;
         }
 
-
         .slide img {
             width: 100%;
             height: 100%;
@@ -160,23 +155,20 @@
             opacity: 0.5;
             transform: scale(0.8);
         }
-
-      
     </style>
 </head>
 <body>
     <div class="sidebar" id="sidebar">
         <h2><i class="fab fa-android"></i></h2>
         <ul id="menuList">
-    <li><span class="fas fa-tv"></span><span class="text">Local</span></li>
-    <li><span class="fas fa-film"></span><span class="text">Entertainment</span></li>
-    <li><span class="fas fa-football-ball"></span><span class="text">Sports</span></li>
-    <li><span class="fas fa-book"></span><span class="text">Knowledge</span></li>
-    <li><span class="fas fa-video"></span><span class="text">Movies</span></li>
-    <li><span class="fas fa-info-circle"></span><span class="text">About</span></li>
-    <li><span class="fas fa-power-off"></span><span class="text">Exit</span></li>
-</ul>
-
+            <li><span class="fas fa-tv"></span><span class="text">Local</span></li>
+            <li><span class="fas fa-film"></span><span class="text">Entertainment</span></li>
+            <li><span class="fas fa-football-ball"></span><span class="text">Sports</span></li>
+            <li><span class="fas fa-book"></span><span class="text">Knowledge</span></li>
+            <li><span class="fas fa-video"></span><span class="text">Movies</span></li>
+            <li><span class="fas fa-info-circle"></span><span class="text">About</span></li>
+            <li><span class="fas fa-power-off"></span><span class="text">Exit</span></li>
+        </ul>
     </div>
 
     <div class="main" id="carouselContainer">
@@ -211,130 +203,130 @@
         </div>
     </div>
 
-  <script>
-    const container = document.getElementById('carouselContainer');
-    const sliders = document.querySelectorAll('.slider');
-    const menuItems = document.querySelectorAll('#menuList li');
-    const sidebar = document.getElementById('sidebar');
+    <script>
+        const container = document.getElementById('carouselContainer');
+        const sliders = document.querySelectorAll('.slider');
+        const menuItems = document.querySelectorAll('#menuList li');
+        const sidebar = document.getElementById('sidebar');
 
-    let currentSliderIndex = 0;
-    let currentMenuIndex = 0;
-    let currentIndices = [0, 0, 0];
-    let sidebarActive = true;
+        let currentSliderIndex = 0;
+        let currentMenuIndex = 0;
+        let currentIndices = [0, 0, 0];
+        let sidebarActive = true;
 
-    function getDominantColor(image) {
-        const canvas = document.createElement('canvas');
-        canvas.width = image.width;
-        canvas.height = image.height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-        const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-        const colorCounts = {};
-        let dominantColor = '';
-        let maxCount = 0;
+        function getDominantColor(image) {
+            const canvas = document.createElement('canvas');
+            canvas.width = image.width;
+            canvas.height = image.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+            const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+            const colorCounts = {};
+            let dominantColor = '';
+            let maxCount = 0;
 
-        for (let i = 0; i < data.length; i += 4) {
-            const color = `${data[i]},${data[i + 1]},${data[i + 2]}`;
-            colorCounts[color] = (colorCounts[color] || 0) + 1;
+            for (let i = 0; i < data.length; i += 4) {
+                const color = `${data[i]},${data[i + 1]},${data[i + 2]}`;
+                colorCounts[color] = (colorCounts[color] || 0) + 1;
 
-            if (colorCounts[color] > maxCount) {
-                maxCount = colorCounts[color];
-                dominantColor = color;
+                if (colorCounts[color] > maxCount) {
+                    maxCount = colorCounts[color];
+                    dominantColor = color;
+                }
             }
+
+            return `rgb(${dominantColor})`;
         }
 
-        return `rgb(${dominantColor})`;
-    }
+        function updateSlider(sliderIndex) {
+            const sliderTrack = sliders[sliderIndex].querySelector('.slider-track');
+            const slides = sliders[sliderIndex].querySelectorAll('.slide');
+            const currentIndex = currentIndices[sliderIndex];
+            const offset = -currentIndex * (slides[0].offsetWidth + 10);
 
-    function updateSlider(sliderIndex) {
-        const sliderTrack = sliders[sliderIndex].querySelector('.slider-track');
-        const slides = sliders[sliderIndex].querySelectorAll('.slide');
-        const currentIndex = currentIndices[sliderIndex];
-        const offset = -currentIndex * (slides[0].offsetWidth + 10);
+            sliderTrack.style.transform = `translateX(${offset}px)`;
 
-        sliderTrack.style.transform = `translateX(${offset}px)`;
+            slides.forEach((slide, index) => {
+                if (index === currentIndex && sliders[sliderIndex].classList.contains('focused')) {
+                    slide.classList.add('active');
+                    const image = slide.querySelector('img');
+                    image.onload = () => {
+                        document.body.style.backgroundColor = getDominantColor(image);
+                    };
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+        }
 
-        slides.forEach((slide, index) => {
-            if (index === currentIndex && sliders[sliderIndex].classList.contains('focused')) {
-                slide.classList.add('active');
-                const image = slide.querySelector('img');
-                image.onload = () => {
-                    document.body.style.backgroundColor = getDominantColor(image);
-                };
-            } else {
-                slide.classList.remove('active');
-            }
-        });
-    }
+        function moveSlider(sliderIndex, direction) {
+            const slides = sliders[sliderIndex].querySelectorAll('.slide');
+            currentIndices[sliderIndex] = (currentIndices[sliderIndex] + direction + slides.length) % slides.length;
+            updateSlider(sliderIndex);
+        }
 
-    function moveSlider(sliderIndex, direction) {
-        const slides = sliders[sliderIndex].querySelectorAll('.slide');
-        currentIndices[sliderIndex] = (currentIndices[sliderIndex] + direction + slides.length) % slides.length;
-        updateSlider(sliderIndex);
-    }
-
-    function focusSlider(index) {
-        sliders[currentSliderIndex].classList.remove('focused');
-        updateSlider(currentSliderIndex);
-
-        currentSliderIndex = index;
-        sliders[currentSliderIndex].classList.add('focused');
-        updateSlider(currentSliderIndex);
-    }
-
-    function updateMenuFocus() {
-        menuItems.forEach((item, index) => {
-            if (index === currentMenuIndex) {
-                item.classList.add('focused');
-            } else {
-                item.classList.remove('focused');
-            }
-        });
-    }
-
-    function toggleSidebar(active) {
-        sidebarActive = active;
-        sidebar.classList.toggle('disabled', !active);
-
-        if (active) {
+        function focusSlider(index) {
             sliders[currentSliderIndex].classList.remove('focused');
             updateSlider(currentSliderIndex);
-            currentMenuIndex = 0;
-            updateMenuFocus();
-        } else {
-            menuItems[currentMenuIndex].classList.remove('focused');
-        }
-    }
 
-    document.addEventListener('keydown', (event) => {
-        if (sidebarActive) {
-            if (event.key === 'ArrowDown') {
-                currentMenuIndex = (currentMenuIndex + 1) % menuItems.length;
+            currentSliderIndex = index;
+            sliders[currentSliderIndex].classList.add('focused');
+            updateSlider(currentSliderIndex);
+        }
+
+        function updateMenuFocus() {
+            menuItems.forEach((item, index) => {
+                if (index === currentMenuIndex) {
+                    item.classList.add('focused');
+                } else {
+                    item.classList.remove('focused');
+                }
+            });
+        }
+
+        function toggleSidebar(active) {
+            sidebarActive = active;
+            sidebar.classList.toggle('disabled', !active);
+
+            if (active) {
+                sliders[currentSliderIndex].classList.remove('focused');
+                updateSlider(currentSliderIndex);
+                currentMenuIndex = 0;
                 updateMenuFocus();
-            } else if (event.key === 'ArrowUp') {
-                currentMenuIndex = (currentMenuIndex - 1 + menuItems.length) % menuItems.length;
-                updateMenuFocus();
-            } else if (event.key === 'ArrowRight') {
-                toggleSidebar(false);
-                focusSlider(currentSliderIndex);
-            }
-        } else {
-            if (event.key === 'ArrowRight') {
-                moveSlider(currentSliderIndex, 1);
-            } else if (event.key === 'ArrowLeft') {
-                moveSlider(currentSliderIndex, -1);
-            } else if (event.key === 'ArrowDown') {
-                focusSlider((currentSliderIndex + 1) % sliders.length);
-            } else if (event.key === 'ArrowUp') {
-                focusSlider((currentSliderIndex - 1 + sliders.length) % sliders.length);
-            } else if (event.key === 'Escape' || event.key === 'Backspace') {
-                toggleSidebar(true);
+            } else {
+                menuItems[currentMenuIndex].classList.remove('focused');
             }
         }
-    });
 
-    updateSlider(0);
-    updateMenuFocus();
-</script>
+        document.addEventListener('keydown', (event) => {
+            if (sidebarActive) {
+                if (event.key === 'ArrowDown') {
+                    currentMenuIndex = (currentMenuIndex + 1) % menuItems.length;
+                    updateMenuFocus();
+                } else if (event.key === 'ArrowUp') {
+                    currentMenuIndex = (currentMenuIndex - 1 + menuItems.length) % menuItems.length;
+                    updateMenuFocus();
+                } else if (event.key === 'ArrowRight') {
+                    toggleSidebar(false);
+                    focusSlider(currentSliderIndex);
+                }
+            } else {
+                if (event.key === 'ArrowRight') {
+                    moveSlider(currentSliderIndex, 1);
+                } else if (event.key === 'ArrowLeft') {
+                    moveSlider(currentSliderIndex, -1);
+                } else if (event.key === 'ArrowDown') {
+                    focusSlider((currentSliderIndex + 1) % sliders.length);
+                } else if (event.key === 'ArrowUp') {
+                    focusSlider((currentSliderIndex - 1 + sliders.length) % sliders.length);
+                } else if (event.key === 'Escape' || event.key === 'Backspace') {
+                    toggleSidebar(true);
+                }
+            }
+        });
+
+        updateSlider(0);
+        updateMenuFocus();
+    </script>
 </body>
 </html>
