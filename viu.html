@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23A9A9A9' d='M96 64h320c17.7 0 32 14.3 32 32V320c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V96c0-17.7 14.3-32 32-32zm0 384h320c17.7 0 32 14.3 32 32s-14.3 32-32 32H96c-17.7 0-32-14.3-32-32s14.3-32 32-32z'/%3E%3C/svg%3E">
-
     <title>eBox - Nonton Gratis</title>
-     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <style>
@@ -30,10 +28,9 @@
             box-sizing: border-box;
             align-items: stretch;
             margin-right: 20px;
-            
         }
 
-          .sidebar.disabled {
+        .sidebar.disabled {
             opacity: 0.5;
             pointer-events: none;
             width: 80px;
@@ -47,13 +44,11 @@
             text-transform: none;
         }
 
-        
-
-       .sidebar ul {
+        .sidebar ul {
             list-style-type: none;
             padding: 0;
             margin: 0;
-            text-align: left; /* Tetap rata kiri */
+            text-align: left; 
         }
 
         .sidebar ul li {
@@ -65,17 +60,17 @@
         }
 
         .sidebar ul li.focused {
-            background-color: #3d3d3d; /* Background abu-abu gelap */
-    border: 2px solid #3d3d3d; /* Border abu-abu gelap */
-    padding: 4px 8px; /* Penyesuaian padding untuk memperhatikan border */
+            background-color: #3d3d3d;
+            border: 2px solid #3d3d3d;
+            padding: 4px 8px;
         }
 
         .sidebar ul li:last-child.focused {
-        background-color: red; /* Background merah */
-            border: 2px solid red; /* Border merah */
-            padding: 4px 8px; /* Penyesuaian padding untuk memperhatikan border */
-    
-}
+            background-color: red;
+            border: 2px solid red;
+            padding: 4px 8px;
+        }
+
         .sidebar ul li:last-child {
             margin-top: 40px;
         }
@@ -84,17 +79,13 @@
             margin-left: 5px;
         }
 
-    
-       /* Menyembunyikan teks saat sidebar dinonaktifkan */
-.sidebar.disabled ul li .text {
-    display: none;
-}
+        .sidebar.disabled ul li .text {
+            display: none;
+        }
 
-
-/* Mengatur ukuran ikon lebih besar saat sidebar dinonaktifkan */
-.sidebar.disabled ul li span {
-    font-size: 24px;
-}
+        .sidebar.disabled ul li span {
+            font-size: 24px;
+        }
 
         .main {
             flex: 1;
@@ -103,7 +94,7 @@
             justify-content: flex-start;
             gap: 20px;
             overflow: hidden;
-            align-items: flex-start; /* Mengatur posisi slider agar lebih dekat ke sidebar */
+            align-items: flex-start;
         }
 
         .slider {
@@ -140,7 +131,6 @@
             transition: opacity 0.3s, transform 0.3s, border 0.3s;
         }
 
-
         .slide img {
             width: 100%;
             height: 100%;
@@ -161,62 +151,65 @@
             opacity: 0.5;
             transform: scale(0.8);
         }
-
-      
     </style>
 </head>
 <body>
     <div class="sidebar" id="sidebar">
         <h2><i class="fab fa-android"></i></h2>
         <ul id="menuList">
-    <li><span class="fas fa-tv"></span><span class="text">Local</span></li>
-    <li><span class="fas fa-film"></span><span class="text">Entertainment</span></li>
-    <li><span class="fas fa-football-ball"></span><span class="text">Sports</span></li>
-    <li><span class="fas fa-book"></span><span class="text">Knowledge</span></li>
-    <li><span class="fas fa-video"></span><span class="text">Movies</span></li>
-    <li><span class="fas fa-info-circle"></span><span class="text">About</span></li>
-    <li><span class="fas fa-power-off"></span><span class="text">Exit</span></li>
-</ul>
-
+            <li><span class="fas fa-tv"></span><span class="text">Local</span></li>
+            <li><span class="fas fa-film"></span><span class="text">Entertainment</span></li>
+            <li><span class="fas fa-football-ball"></span><span class="text">Sports</span></li>
+            <li><span class="fas fa-book"></span><span class="text">Knowledge</span></li>
+            <li><span class="fas fa-video"></span><span class="text">Movies</span></li>
+            <li><span class="fas fa-info-circle"></span><span class="text">About</span></li>
+            <li><span class="fas fa-power-off"></span><span class="text">Exit</span></li>
+        </ul>
     </div>
 
-   <div class="main" id="carouselContainer">
-    <div class="slider" id="sliderUnified">
-        <div class="slider-track" id="sliderTrackUnified">
-            <!-- Slides from slider1 -->
-            <div class="slide active"><img src="https://via.placeholder.com/200x120?text=1" alt="Slide 1"></div>
-            <div class="slide"><img src="https://via.placeholder.com/200x120?text=2" alt="Slide 2"></div>
-            <div class="slide"><img src="https://via.placeholder.com/200x120?text=3" alt="Slide 3"></div>
-            <div class="slide"><img src="https://via.placeholder.com/200x120?text=4" alt="Slide 4"></div>
-            <div class="slide"><img src="https://via.placeholder.com/200x120?text=5" alt="Slide 5"></div>
-
-            <!-- Slides from slider2 -->
-            <div class="slide"><img src="https://via.placeholder.com/200x120?text=A" alt="Slide A"></div>
-            <div class="slide"><img src="https://via.placeholder.com/200x120?text=B" alt="Slide B"></div>
-            <div class="slide"><img src="https://via.placeholder.com/200x120?text=C" alt="Slide C"></div>
-            <div class="slide"><img src="https://via.placeholder.com/200x120?text=D" alt="Slide D"></div>
-            <div class="slide"><img src="https://via.placeholder.com/200x120?text=E" alt="Slide E"></div>
-
-            <!-- Slides from slider3 -->
-            <div class="slide"><img src="https://via.placeholder.com/200x120?text=I" alt="Slide I"></div>
-            <div class="slide"><img src="https://via.placeholder.com/200x120?text=II" alt="Slide II"></div>
-            <div class="slide"><img src="https://via.placeholder.com/200x120?text=III" alt="Slide III"></div>
-            <div class="slide"><img src="https://via.placeholder.com/200x120?text=IV" alt="Slide IV"></div>
-            <div class="slide"><img src="https://via.placeholder.com/200x120?text=V" alt="Slide V"></div>
+    <div class="main" id="carouselContainer">
+        <div class="slider" id="sliderUnified">
+            <div class="slider-track" id="sliderTrackUnified"></div>
         </div>
     </div>
-</div>
-    
+
     <script>
         const container = document.getElementById('carouselContainer');
         const menuItems = document.querySelectorAll('#menuList li');
         const sidebar = document.getElementById('sidebar');
 
-        let currentSliderIndex = 0;
-        let currentMenuIndex = 0;
-        let currentIndices = [];
-        let sidebarActive = true;
+        // Data JSON untuk slide
+        const slideData = {
+            "slides": [
+                { "src": "https://via.placeholder.com/200x120?text=1", "alt": "Slide 1" },
+                { "src": "https://via.placeholder.com/200x120?text=2", "alt": "Slide 2" },
+                { "src": "https://via.placeholder.com/200x120?text=3", "alt": "Slide 3" },
+                { "src": "https://via.placeholder.com/200x120?text=4", "alt": "Slide 4" },
+                { "src": "https://via.placeholder.com/200x120?text=5", "alt": "Slide 5" },
+                { "src": "https://via.placeholder.com/200x120?text=A", "alt": "Slide A" },
+                { "src": "https://via.placeholder.com/200x120?text=B", "alt": "Slide B" },
+                { "src": "https://via.placeholder.com/200x120?text=C", "alt": "Slide C" },
+                { "src": "https://via.placeholder.com/200x120?text=D", "alt": "Slide D" },
+                { "src": "https://via.placeholder.com/200x120?text=E", "alt": "Slide E" }
+            ]
+        };
 
+        // Fungsi untuk mendistribusikan slide dari data JSON
+        function distributeSlides() {
+            const allSlides = slideData.slides;
+            const slidesPerSlider = 5;
+            container.innerHTML = ''; // Bersihkan slider yang ada
+
+            // Membagi slides menjadi beberapa slider dengan 5 slides per slider
+            for (let i = 0; i < allSlides.length; i += slidesPerSlider) {
+                const slidesChunk = allSlides.slice(i, i + slidesPerSlider);
+
+                // Membuat slider dengan chunk slides tersebut
+                const slider = createSlider(slidesChunk);
+            }
+        }
+
+        // Fungsi untuk membuat slider berdasarkan data
         function createSlider(slides) {
             const slider = document.createElement('div');
             slider.classList.add('slider');
@@ -224,113 +217,19 @@
             const sliderTrack = document.createElement('div');
             sliderTrack.classList.add('slider-track');
 
-            slides.forEach(slide => sliderTrack.appendChild(slide));
+            slides.forEach(slideData => {
+                const slide = document.createElement('div');
+                slide.classList.add('slide');
+                slide.innerHTML = `<img src="${slideData.src}" alt="${slideData.alt}">`;
+                sliderTrack.appendChild(slide);
+            });
+
             slider.appendChild(sliderTrack);
-
             container.appendChild(slider);
-            currentIndices.push(0);
-            return slider;
         }
 
-        function distributeSlides() {
-            const allSlides = Array.from(document.querySelectorAll('.slide'));
-            const slidesPerSlider = 5;
-            container.innerHTML = ''; // Clear existing sliders
-
-            for (let i = 0; i < allSlides.length; i += slidesPerSlider) {
-                const slidesChunk = allSlides.slice(i, i + slidesPerSlider);
-                createSlider(slidesChunk);
-            }
-        }
-
-        function updateSlider(sliderIndex) {
-            const sliders = document.querySelectorAll('.slider');
-            const sliderTrack = sliders[sliderIndex].querySelector('.slider-track');
-            const slides = sliders[sliderIndex].querySelectorAll('.slide');
-            const currentIndex = currentIndices[sliderIndex];
-            const offset = -currentIndex * (slides[0].offsetWidth + 10);
-
-            sliderTrack.style.transform = `translateX(${offset}px)`;
-
-            slides.forEach((slide, index) => {
-                if (index === currentIndex && sliders[sliderIndex].classList.contains('focused')) {
-                    slide.classList.add('active');
-                } else {
-                    slide.classList.remove('active');
-                }
-            });
-        }
-
-        function moveSlider(sliderIndex, direction) {
-            const sliders = document.querySelectorAll('.slider');
-            const slides = sliders[sliderIndex].querySelectorAll('.slide');
-            currentIndices[sliderIndex] = (currentIndices[sliderIndex] + direction + slides.length) % slides.length;
-            updateSlider(sliderIndex);
-        }
-
-        function focusSlider(index) {
-            const sliders = document.querySelectorAll('.slider');
-            sliders[currentSliderIndex].classList.remove('focused');
-            updateSlider(currentSliderIndex);
-
-            currentSliderIndex = index;
-            sliders[currentSliderIndex].classList.add('focused');
-            updateSlider(currentSliderIndex);
-        }
-
-        function updateMenuFocus() {
-            menuItems.forEach((item, index) => {
-                if (index === currentMenuIndex) {
-                    item.classList.add('focused');
-                } else {
-                    item.classList.remove('focused');
-                }
-            });
-        }
-
-        function toggleSidebar(active) {
-            sidebarActive = active;
-            sidebar.classList.toggle('disabled', !active);
-
-            if (active) {
-                currentMenuIndex = 0;
-                updateMenuFocus();
-            }
-        }
-
-        document.addEventListener('keydown', (event) => {
-            const sliders = document.querySelectorAll('.slider');
-
-            if (sidebarActive) {
-                if (event.key === 'ArrowDown') {
-                    currentMenuIndex = (currentMenuIndex + 1) % menuItems.length;
-                    updateMenuFocus();
-                } else if (event.key === 'ArrowUp') {
-                    currentMenuIndex = (currentMenuIndex - 1 + menuItems.length) % menuItems.length;
-                    updateMenuFocus();
-                } else if (event.key === 'ArrowRight') {
-                    toggleSidebar(false);
-                    focusSlider(currentSliderIndex);
-                }
-            } else {
-                if (event.key === 'ArrowRight') {
-                    moveSlider(currentSliderIndex, 1);
-                } else if (event.key === 'ArrowLeft') {
-                    moveSlider(currentSliderIndex, -1);
-                } else if (event.key === 'ArrowDown') {
-                    focusSlider((currentSliderIndex + 1) % sliders.length);
-                } else if (event.key === 'ArrowUp') {
-                    focusSlider((currentSliderIndex - 1 + sliders.length) % sliders.length);
-                } else if (event.key === 'Escape' || event.key === 'Backspace') {
-                    toggleSidebar(true);
-                }
-            }
-        });
-
+        // Panggil fungsi distributeSlides untuk mendistribusikan slide
         distributeSlides();
-        updateSlider(0);
-        updateMenuFocus();
-
     </script>
 </body>
 </html>
