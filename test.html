@@ -98,20 +98,19 @@
 
         .main {
             flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start; /* Memindahkan elemen slider ke atas */
-        align-items: flex-start; /* Tetap memusatkan slider */
-        margin-left: 20px;
-        overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+            overflow: hidden;
+            align-items: flex-start; /* Mengatur posisi slider agar lebih dekat ke sidebar */
         }
 
         .slider {
-             display: flex;
-        overflow: visible;
-        width: 80%;
-        position: relative;
-        margin-top: 20px;
+            display: flex;
+            overflow: visible;
+            width: 80%;
+            position: relative;
         }
 
         .slider-track {
@@ -122,7 +121,7 @@
         .slide {
             width: 240px;
             height: 135px;
-            margin: 0 2px;
+            margin: 0 5px;
             background-color: #444;
             color: white;
             display: flex;
@@ -180,33 +179,33 @@
 
     </div>
 
-    <div class="main" id="carouselContainer">
-        <div class="slider" id="slider1">
-            <div class="slider-track" id="sliderTrack1">
-                <div class="slide active"><img src="https://via.placeholder.com/200x120?text=1" alt="Slide 1"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=2" alt="Slide 2"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=3" alt="Slide 3"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=4" alt="Slide 4"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=5" alt="Slide 5"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=6" alt="Slide 6"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=7" alt="Slide 7"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=8" alt="Slide 8"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=9" alt="Slide 9"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=10" alt="Slide 10"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=11" alt="Slide 11"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=12" alt="Slide 12"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=13" alt="Slide 13"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=14" alt="Slide 14"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=15" alt="Slide 15"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=16" alt="Slide 16"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=17" alt="Slide 17"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=18" alt="Slide 18"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=19" alt="Slide 19"></div>
-                <div class="slide"><img src="https://via.placeholder.com/200x120?text=20" alt="Slide 20"></div>
-            </div>
+   <div class="main" id="carouselContainer">
+    <div class="slider" id="sliderUnified">
+        <div class="slider-track" id="sliderTrackUnified">
+            <!-- Slides from slider1 -->
+            <div class="slide active"><img src="https://via.placeholder.com/200x120?text=1" alt="Slide 1"></div>
+            <div class="slide"><img src="https://via.placeholder.com/200x120?text=2" alt="Slide 2"></div>
+            <div class="slide"><img src="https://via.placeholder.com/200x120?text=3" alt="Slide 3"></div>
+            <div class="slide"><img src="https://via.placeholder.com/200x120?text=4" alt="Slide 4"></div>
+            <div class="slide"><img src="https://via.placeholder.com/200x120?text=5" alt="Slide 5"></div>
+
+            <!-- Slides from slider2 -->
+            <div class="slide"><img src="https://via.placeholder.com/200x120?text=A" alt="Slide A"></div>
+            <div class="slide"><img src="https://via.placeholder.com/200x120?text=B" alt="Slide B"></div>
+            <div class="slide"><img src="https://via.placeholder.com/200x120?text=C" alt="Slide C"></div>
+            <div class="slide"><img src="https://via.placeholder.com/200x120?text=D" alt="Slide D"></div>
+            <div class="slide"><img src="https://via.placeholder.com/200x120?text=E" alt="Slide E"></div>
+
+            <!-- Slides from slider3 -->
+            <div class="slide"><img src="https://via.placeholder.com/200x120?text=I" alt="Slide I"></div>
+            <div class="slide"><img src="https://via.placeholder.com/200x120?text=II" alt="Slide II"></div>
+            <div class="slide"><img src="https://via.placeholder.com/200x120?text=III" alt="Slide III"></div>
+            <div class="slide"><img src="https://via.placeholder.com/200x120?text=IV" alt="Slide IV"></div>
+            <div class="slide"><img src="https://via.placeholder.com/200x120?text=V" alt="Slide V"></div>
         </div>
     </div>
-
+</div>
+    
     <script>
         const container = document.getElementById('carouselContainer');
         const sliders = document.querySelectorAll('.slider');
@@ -215,7 +214,7 @@
 
         let currentSliderIndex = 0;
         let currentMenuIndex = 0;
-        let currentIndices = [0];
+        let currentIndices = [0, 0, 0];
         let sidebarActive = true;
 
         function updateSlider(sliderIndex) {
