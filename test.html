@@ -98,19 +98,20 @@
 
         .main {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 20px;
-            overflow: hidden;
-            align-items: flex-start; /* Mengatur posisi slider agar lebih dekat ke sidebar */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; /* Memindahkan elemen slider ke atas */
+        align-items: center; /* Tetap memusatkan slider */
+        gap: 20px;
+        overflow: hidden;
         }
 
         .slider {
-            display: flex;
-            overflow: visible;
-            width: 80%;
-            position: relative;
+             display: flex;
+        overflow: visible;
+        width: 80%;
+        position: relative;
+        margin-top: 20px;
         }
 
         .slider-track {
